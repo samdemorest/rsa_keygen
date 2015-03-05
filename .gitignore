@@ -1,3 +1,5 @@
+.gitignore
+.git
 Cargo.lock
 src/outfile
 target/
