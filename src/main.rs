@@ -17,6 +17,7 @@ use std::num::ToPrimitive;
 use std::num::Float;
 use std::usize;
 use core::ops::*;
+use rand::Rng;
 
 use num::bigint::BigInt::*;
 use std::{env};
