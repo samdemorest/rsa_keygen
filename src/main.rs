@@ -24,7 +24,7 @@ fn main() {
     let mut optional: num::bigint::BigUint;
     let mut bignum: num::bigint::BigUint;
     let mut rnjesus = rand::thread_rng();
-    bignum = rnjesus.gen_biguint(bit_size);
+    bignum = generate_large_prime_number(bit_size);
     let mut big_vec: Vec<num::bigint::BigUint> = Vec::new();
     println!("Big number incoming: {}", bignum);
     for _ in 0..100 {
@@ -37,15 +37,15 @@ fn main() {
 
 
 
-fn generate_large_number(bit_size: usize) -> num::bigint::BigUint{
+fn generate_large_prime_number(bit_size: usize) -> num::bigint::BigUint{
     let mut bignum: num::bigint::BigUint;
     let mut randyjackson = rand::thread_rng();
     bignum = randyjackson.gen_biguint(bit_size);
 	
-	if check_primality(bignum) {
+	if check_primality(&bignum) {
 		return bignum;
 	} else {
-		return generate_large_number(bit_size);
+		return generate_large_prime_number(bit_size);
 	}
 }
 
@@ -66,46 +66,65 @@ fn write_bnum(bignum: num::bigint::BigUint){
     
 }
 
-fn check_primality(bignum: num::bigint::BigUint) -> bool {
 
+/*
+ * This function will test for 2 and 3 divisability before sending it to 
+ * 	the aks function 
+ */
+fn check_primality(bignum: &num::bigint::BigUint) -> bool {
+
+	let mut scalar_one: num::bigint::BigUint;
+	let mut scalar_two: num::bigint::BigUint;
+	
+	scalar_one = BigUint::parse_bytes("3".as_bytes(),10).unwrap();
+	scalar_two = BigUint::parse_bytes("2".as_bytes(),10).unwrap();
+	
+	//println!("{}",scalar_one);
+	//println!("{}",scalar_two);
+	
+	println!("big num {}", bignum);
+	
 	//if its a small prime dont bother
-	if bignum <= 3 {
-		if bignum > 1 {
+	if * bignum <= scalar_one {
+		scalar_one = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+		if * bignum > scalar_one {
 			return true;
 		}
-	} else { //divisable by two or three...come on now
-		if ((bignum % 2 == 0) || (bignum % 3 == 0)) {
+		scalar_one = BigUint::parse_bytes("3".as_bytes(),10).unwrap();
+	} else { 	
+	
+		//divisable by two or three...come on now
+		
+		let mut temp = bignum;
+		
+		let mut result_one = temp % scalar_two;
+		let mut result_two = temp % scalar_one;
+		
+		//println!("{}",result_one);
+		//println!("{}",result_two);
+		
+		if (result_one == BigUint::parse_bytes("0".as_bytes(),10).unwrap() || ( result_two == BigUint::parse_bytes("0".as_bytes(),10).unwrap())) {
 			return false;
 		}
 	}
 	
-	//setting up looping to check more possibilities
-	let mut done = false;
-	let mut i: int;
+	//This is where we would start using the aks system
 	
-	i = 5;
-	
-	while !done{
-		if (i * i) > bignum{
-			done = true;
-		} else {
-			if bignum % i == 0 || bignum % (i + 2) == 0 {
-				return false;
-			} else {
-				i += 6;
-			}
-		}
-	}
-	
-	return true;
+	return aks_primality_test(bignum);
 }
 
+/**
+ *   This is the aks primality testing area
+ */
+fn aks_primality_test(bignum: &num::bigint::BigUint) -> bool{
+	return true;
+} 
 
 /**
  *  This function returns the euler's totient value based on given numbers p, q and n
  */
 fn euler_totient(p: num::bigint::BigUint, q: num::bigint::BigUint, n: num::bigint::BigUint) -> num::bigint::BigUint {
-	let mut euler: num::bigint::BigUint;
-	euler = n - (p + q - 1);
-	return euler;
-}
+  let mut euler: num::bigint::BigUint;
+ 	euler = n - (p + q - BigUint::parse_bytes("1".as_bytes(),10).unwrap());
+ 	return euler;
+ }
