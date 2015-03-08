@@ -35,11 +35,26 @@ fn main() {
 
 }
 
+
+
+fn generate_large_number(bit_size: usize) -> num::bigint::BigUint{
+    let mut bignum: num::bigint::BigUint;
+    let mut randyjackson = rand::thread_rng();
+    bignum = randyjackson.gen_biguint(bit_size);
+	
+	if check_primality(bignum) {
+		return bignum;
+	} else {
+		return generate_large_number(bit_size);
+	}
+}
+
+
 /**
  * This function writes the bytes of a BigUint to a file.
  */
 fn write_bnum(bignum: num::bigint::BigUint){
-    let mut file = File::create(&Path::new("outfile"));
+    let mut file = File::create(&Path::new("outfile.txt"));
     let testnum = [65, 65, 65, 65];
     let bignum_bytes: Vec<u8> = bignum.to_bytes_le();
     println!("{}", testnum.to_base64(STANDARD));
@@ -52,18 +67,45 @@ fn write_bnum(bignum: num::bigint::BigUint){
 }
 
 fn check_primality(bignum: num::bigint::BigUint) -> bool {
-    let mut q: num::bigint::BigUint;   
-    let mut r: num::bigint::BigUint;   
-    let mut m: num::bigint::BigUint;   
-    let mut isprime: bool;
-    
 
-    return false;
+	//if its a small prime dont bother
+	if bignum <= 3 {
+		if bignum > 1 {
+			return true;
+		}
+	} else { //divisable by two or three...come on now
+		if ((bignum % 2 == 0) || (bignum % 3 == 0)) {
+			return false;
+		}
+	}
+	
+	//setting up looping to check more possibilities
+	let mut done = false;
+	let mut i: int;
+	
+	i = 5;
+	
+	while !done{
+		if (i * i) > bignum{
+			done = true;
+		} else {
+			if bignum % i == 0 || bignum % (i + 2) == 0 {
+				return false;
+			} else {
+				i += 6;
+			}
+		}
+	}
+	
+	return true;
 }
 
-/*
- * Was going to write GCD function, but it is already implemented for BigUint type.
+
+/**
+ *  This function returns the euler's totient value based on given numbers p, q and n
  */
-/*fn gcd(bignum: num::bigint::BigUint, div: num::bigint::BigUint) 
-    -> num::bigint::BigUint {
-}*/
+fn euler_totient(p: num::bigint::BigUint, q: num::bigint::BigUint, n: num::bigint::BigUint) -> num::bigint::BigUint {
+	let mut euler: num::bigint::BigUint;
+	euler = n - (p + q - 1);
+	return euler;
+}
