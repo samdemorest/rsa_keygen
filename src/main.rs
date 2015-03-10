@@ -15,6 +15,9 @@ use rustc_serialize::base64::*;
 use rand::Rng;
 use core::ops::*;
 use std::{env, fmt, usize};
+use rand::Rng;
+use num::bigint::BigInt::*;
+use std::{env};
 
 /*
  * Main driver for the program. Lots of experimentation going on here on how to do various tasks

@@ -6,5 +6,5 @@ authors = ["sam"]
 
 [dependencies]
 num = "*"
-rand = "*"
+rand = "0.1.4"
 rustc-serialize = "*"
