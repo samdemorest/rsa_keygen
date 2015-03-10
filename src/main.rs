@@ -32,10 +32,30 @@ fn main() {
     }
     write_bnum(bignum);
     println!("Option unwrap: {}", BigUint::from_u64(420).unwrap());
-
+	let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
+	let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
+	
+	let mut n = (&p) * (&q);
+	
+	let mut totient = euler_totient(&p,&q,&n);
+	let mut e = generate_e((&totient), bit_size);
+	let mut d = find_modular_inverse((&e),(&totient));
 }
 
+fn find_modular_inverse(e: &num::bigint::BigUint, totient: &num::bigint::BigUint) -> num::bigint::BigUint {
+	return ((BigUint::parse_bytes("1".as_bytes(),10).unwrap() / e) % totient);
+}
 
+fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::BigUint {
+	let mut e = generate_large_prime_number(bit_size);
+	if &e < totient {
+		if totient % &e != BigUint::parse_bytes("0".as_bytes(),10).unwrap() {
+			return e;
+		} 
+	}
+	
+	return generate_e(totient,bit_size);
+}
 
 fn generate_large_prime_number(bit_size: usize) -> num::bigint::BigUint{
     let mut bignum: num::bigint::BigUint;
@@ -123,7 +143,7 @@ fn aks_primality_test(bignum: &num::bigint::BigUint) -> bool{
 /**
  *  This function returns the euler's totient value based on given numbers p, q and n
  */
-fn euler_totient(p: num::bigint::BigUint, q: num::bigint::BigUint, n: num::bigint::BigUint) -> num::bigint::BigUint {
+fn euler_totient(p: &num::bigint::BigUint, q: &num::bigint::BigUint, n: &num::bigint::BigUint) -> num::bigint::BigUint {
   let mut euler: num::bigint::BigUint;
  	euler = n - (p + q - BigUint::parse_bytes("1".as_bytes(),10).unwrap());
  	return euler;
