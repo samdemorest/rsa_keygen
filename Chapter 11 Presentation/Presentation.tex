@@ -25,9 +25,8 @@
 } 
 
 
-\section{Number Theory} 
+\section{Number Theory Review} 
 
-\subsection{Composite and Prime Numbers}
 \frame{\frametitle{Composite and Prime Numbers} 
 Composite Numbers have a divisor other than itself and one. \newline
 For example 4$\mid$20 means that 20 = 5 * 4 \newline
@@ -36,32 +35,81 @@ Prime numbers have no divisors but 1 and itself \newline
 First 10 Primes \newline
 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
 }
-\subsection{Greatest Common Divisor}
+
+\section{Greatest Common Divisor}
 \frame{\frametitle{Greatest Common Divisor}
+	If h$\mid$m and h$\mid$n then h is called a common divisor\newline
 	A common divisor is a number that is a factor of both numbers \newline
-	For example gcd(12,15) = 3 \newline
 	The greatest common divisor is the largest factor for both numbers \newline	
+	This is denoted gcd(n,m) \newline
+	For example gcd(12,15) = 3 \newline \newline
+	For any two integers n and m where m $\ne$ 0 the quotient is n divided by n is given by \newline
+	$q = \lfloor n / m \rfloor$\newline
+	The remainder r of dividing n by m is given by \newline
+	$r = n - qm$\newline
 }
 
-\subsection{Prime Factorization}
+\frame{\frametitle{Greatest Common Divsor (cont)}
+	Let n and m be integers, not both 0 and let\newline
+	d = min \{ in + jm such that i,j $\in$ Z and in + jm > 0\}\newline
+	That is, d is the smallest positive linear combination of n and m \newline
+	For example we know gcd(12, 8) = 4,\newline the smallest linear combination is \newline
+	$4 = 3(12) + (-4)8$
+	\newline \newline
+	Now suppose we have n $\ge$ 0 and m $>$ 0 and r = n mod(m) then \newline
+	gcd(n , m) = gcd(m , r)\newline
+	so gcd(64 , 24) = gcd(24, 16)\newline
+	\hspace*{2.45cm} = gcd(16, 8) \newline
+	\hspace*{2.45cm} = gcd(8, 0) \newline
+	\hspace*{2.45cm} = 8 \newline
+}
+
+
+\frame{\frametitle{Least Common Multiple}
+	For n and m where they are both nonzero, the least common multiple is denoted lcm(n,m)\newline
+	For example lcm(6,9) = 18 because 6$\mid$18 and 9 $\mid$18\newline
+	The lcm(n,m) is a product of primes that are common to m and n, where the power of each prime in the product is the larger of its orders in n and m\newline
+	So $12={2}^{2}×{3}^{1}$ and $45={3}^{2}×{5}^{1}$\newline
+	so lcm(12,45) = ${2}^{2}×{3}^{2}×{5}^{1}$ = 180
+}
+
 \frame{\frametitle{Prime Factorization}
+	Two integers are relatively prime because the gcd of them is 1 \newline
+	For example gcd(12, 25) = 1 so they are relatively prime \newline
+	If h and m are relatively prime and h divides nm, then h divides m.\newline
+	That is gcd(h,m) = 1 and h$\mid$nm implies h$\mid$n \newline
+}
+
+\frame{\frametitle{Prime Factorization (cont)}
 	Every integer X $>$ 1 can be written as a unique product of primes \newline
 	That is X = p$_{1}^{k_{1}}$ * p$_{2}^{k_{2}}$ * ... * p$_{n}^{k_{n}}$  \newline
 	Where p$_{1}<$p$_{2}<$...p$_{n}$ and this representation of n is unique \newline
-	Example being 22,275 = 3$^{4}$ * 5$^{2}$ * 11 \newline
-	There is no polynomial time algorithm for finding determining the factorization of an integer \newline
+	Example being 22,275 = 3$^{4}$ * 5$^{2}$ * 11 \newline \newline
+	To solve gcd(3,185,325, 7,276,500) we know \newline
+	3,185,325 = ${3}^{4}{5}^{2}{11}^{2}{13}^{1}$\newline
+	7,276,500 = ${2}^{2}{3}^{3}{5}^{3}{7}^{2}{11}^{1}$\newline
+	We then take the common divisors and take the lower power to create the gcd \newline
+	so gcd(3,185,325, 7,276,500) = ${3}^{3}{5}^{2}{11}^{1}$ = 7,425
 }
 
-\subsection{Least Common Multiple}
-\frame{\frametitle{Least Common Multiple}
-	
-}
 
 \section{Euclid's Algorithm}
 
 \subsection{Euclid's Algorithm}
 \frame{\frametitle{Euclid's Algorithm}
-	
+	Euclid's Algorithm gives us a straight forward way to find the gcd of two numbers \newline
+	int gcd(int n, int m)\newline
+	\{\newline
+	\hspace*{1cm}if(m == 0)\newline
+	\hspace*{2cm} return n;\newline
+	\newline
+	\hspace*{1cm}else\newline
+	\hspace*{2cm} return gcd(m, n mod m);\newline
+	\}
+}
+
+\frame{\frametitle{Euclid's Algorithm WTC}
+		
 }
 
 \subsection{Extension to Euclid's Algorithm}
