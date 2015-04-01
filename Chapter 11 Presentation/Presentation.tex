@@ -95,7 +95,6 @@ First 10 Primes \newline
 
 \section{Euclid's Algorithm}
 
-\subsection{Euclid's Algorithm}
 \frame{\frametitle{Euclid's Algorithm}
 	Euclid's Algorithm gives us a straight forward way to find the gcd of two numbers \newline
 	int gcd(int n, int m)\newline
@@ -108,37 +107,81 @@ First 10 Primes \newline
 	\}
 }
 
-\frame{\frametitle{Euclid's Algorithm WTC}
-		
+\frame{\frametitle{Extension to Euclid's Algorithm}
+	void Euclid (int n, int m, int gcd, int i, int j)\{ \newline
+	\hspace*{1cm}if (m == 0) \{\newline
+	\hspace*{2cm}gcd = n; i = 1; j = 0;\newline
+	\hspace*{1cm}\}\newline
+	\hspace*{1cm}else \{\newline
+	\hspace*{2cm}int iprime, jprime, gcdprime;\newline
+	\hspace*{2cm}Euclid (m, n mod m, gcdprime, iprime, jprime);\newline
+	\hspace*{2cm}gcd = gcdprime;\newline
+	\hspace*{2cm}i = jprime;\newline
+	\hspace*{2cm}j = iprime -$ \lfloor n / m \rfloor$ jprime ;\newline
+	\hspace*{1cm}\}\newline
+	\}
 }
 
-\subsection{Extension to Euclid's Algorithm}
-\frame{\frametitle{Extension to Euclid's Algorithm}
-	
+\frame{\frametitle{Why Use the Other Algorithm?}
+	This other algorithm will give us integers i and j as well \newline
+	So, gcd = in + jm \newline
+	For Example Euclid(42, 30, gcd, i, j) outputs \newline
+	gcd = 6, i = -2 and j = 3 \newline
+	6 = -2(42) + 3(30) \newline
+}
+
+\frame{\frametitle{Proof Extended Algorithm}
+	Induction Base: In the last recursive call m = 0, which means gcd(n, m) = n\newline
+	Since the values of i and j are assigned values 1 and - respectively we have \newline
+	$i×n+j×m=1×n+0×m=n=gcd\left(n,m\right)$	\newline \newline
+	Induction Hypothesis: Assume in the kth recursive call the values determined for i and j are such that\newline
+	gcd(n,m) = in + mj \newline
+	Then the values returned by that call for i' and j' are values such that \newline
+	gcd(m, n mod m) = i'm + j'n mod m \newline
+}
+
+\frame{\frametitle{Proof Extended Algorithm (cont)}
+	Induction Step: We have for the (k - 1)st call that\newline
+	in + mmj = j'n + (i' - $\lfloor n / m \rfloor$ j')m\newline
+	\hspace*{1.7cm}= i'm + j'(n - $\lfloor n / m \rfloor$m)\newline
+	\hspace*{1.7cm}= i'm + j'n mod m\newline
+	\hspace*{1.7cm}= gcd(m, n mod m)\newline
+	\hspace*{1.7cm}= gcd(n,m) \newline
+	The second to last equality is due to the induction hypothesis\newline	
 }
 
 \section{Modular Arithmetic}
 
-\subsection{Group Theory}
 \frame{\frametitle{Group Theory}
-	
+	A closed binary operation * on a set S is a rule for combining two elements of S to yield another element of S. \newline
+	This operation is associative, has an identity element and inverse element \newline
+	For example with integers $\in$ Z with addition constitute a group. \newline
+	The identity element is 0 and the inverse of a is -a\newline
+	Every element in the group only has one inverse \newline
+	A group is said to be finite if S contains a finite number of elements\newline
+	A group is said to be commutative (or abelian) if for all a, b $\in$ S,
 }
 
-\subsection{Congruency Modulo n}
 \frame{\frametitle{Congruency Modulo n}
-	
+	Let m and k be integers and n be a positive integer. If n$\mid$(m - k) we say m is congruent to k modulo n, and this is written by \newline
+	$m\equiv k\mathrm{mod}n$ \newline
+	For Example \newline
+	Since 5$\mid$(33 - 18), $33\equiv 18\mathrm{mod}5$ \newline
+}
+
+\frame{\frametitle{Theorem 11.13 Congruency}
+	Suppose $n_{1},n_{2},...,n_{j}$ are pairwise relatively prime and 
+	n = $n_{1},n_{2},...,n_{j}$
+	Then for all integers m and k
 }
 
 
-
-\subsection{Subgroups}
 \frame{\frametitle{Subgroups}
 	
 }
 
 \section{Solving Modular Linear Equations}
 
-\subsection{Solving Modular Linear Equations}
 \frame{\frametitle{Solving Modular Linear Equations}
 	
 }

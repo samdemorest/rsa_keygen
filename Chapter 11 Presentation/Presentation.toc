@@ -2,19 +2,15 @@
 \beamer@sectionintoc {1}{Number Theory Review}{3}{0}{1}
 \beamer@sectionintoc {2}{Greatest Common Divisor}{4}{0}{2}
 \beamer@sectionintoc {3}{Euclid's Algorithm}{9}{0}{3}
-\beamer@subsectionintoc {3}{1}{Euclid's Algorithm}{9}{0}{3}
-\beamer@subsectionintoc {3}{2}{Extension to Euclid's Algorithm}{10}{0}{3}
-\beamer@sectionintoc {4}{Modular Arithmetic}{11}{0}{4}
-\beamer@subsectionintoc {4}{1}{Group Theory}{11}{0}{4}
-\beamer@subsectionintoc {4}{2}{Congruency Modulo n}{12}{0}{4}
-\beamer@subsectionintoc {4}{3}{Subgroups}{13}{0}{4}
-\beamer@sectionintoc {5}{Solving Modular Linear Equations}{14}{0}{5}
-\beamer@subsectionintoc {5}{1}{Solving Modular Linear Equations}{14}{0}{5}
-\beamer@sectionintoc {6}{Computing Modular Powers}{15}{0}{6}
-\beamer@subsectionintoc {6}{1}{Computing Modular Powers}{15}{0}{6}
-\beamer@sectionintoc {7}{Finding Large Prime Numbers}{16}{0}{7}
-\beamer@subsectionintoc {7}{1}{Searching for a Large Prime}{16}{0}{7}
-\beamer@subsectionintoc {7}{2}{Checking if a Number is Prime}{17}{0}{7}
-\beamer@sectionintoc {8}{RSA Public-Key Cryptosystem}{18}{0}{8}
-\beamer@subsectionintoc {8}{1}{Public-Key Cryptosystems}{18}{0}{8}
-\beamer@subsectionintoc {8}{2}{RSA Cryptosystem}{19}{0}{8}
+\beamer@sectionintoc {4}{Modular Arithmetic}{14}{0}{4}
+\beamer@subsectionintoc {4}{1}{Subgroups}{16}{0}{4}
+\beamer@sectionintoc {5}{Solving Modular Linear Equations}{17}{0}{5}
+\beamer@subsectionintoc {5}{1}{Solving Modular Linear Equations}{17}{0}{5}
+\beamer@sectionintoc {6}{Computing Modular Powers}{18}{0}{6}
+\beamer@subsectionintoc {6}{1}{Computing Modular Powers}{18}{0}{6}
+\beamer@sectionintoc {7}{Finding Large Prime Numbers}{19}{0}{7}
+\beamer@subsectionintoc {7}{1}{Searching for a Large Prime}{19}{0}{7}
+\beamer@subsectionintoc {7}{2}{Checking if a Number is Prime}{20}{0}{7}
+\beamer@sectionintoc {8}{RSA Public-Key Cryptosystem}{21}{0}{8}
+\beamer@subsectionintoc {8}{1}{Public-Key Cryptosystems}{21}{0}{8}
+\beamer@subsectionintoc {8}{2}{RSA Cryptosystem}{22}{0}{8}

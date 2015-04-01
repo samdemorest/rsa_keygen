@@ -1,19 +1,15 @@
 \BOOKMARK [2][]{Outline0.1}{Number Theory Review}{}% 1
 \BOOKMARK [2][]{Outline0.2}{Greatest Common Divisor}{}% 2
 \BOOKMARK [2][]{Outline0.3}{Euclid's Algorithm}{}% 3
-\BOOKMARK [3][]{Outline0.3.1.9}{Euclid's Algorithm}{Outline0.3}% 4
-\BOOKMARK [3][]{Outline0.3.2.10}{Extension to Euclid's Algorithm}{Outline0.3}% 5
-\BOOKMARK [2][]{Outline0.4}{Modular Arithmetic}{}% 6
-\BOOKMARK [3][]{Outline0.4.1.11}{Group Theory}{Outline0.4}% 7
-\BOOKMARK [3][]{Outline0.4.2.12}{Congruency Modulo n}{Outline0.4}% 8
-\BOOKMARK [3][]{Outline0.4.3.13}{Subgroups}{Outline0.4}% 9
-\BOOKMARK [2][]{Outline0.5}{Solving Modular Linear Equations}{}% 10
-\BOOKMARK [3][]{Outline0.5.1.14}{Solving Modular Linear Equations}{Outline0.5}% 11
-\BOOKMARK [2][]{Outline0.6}{Computing Modular Powers}{}% 12
-\BOOKMARK [3][]{Outline0.6.1.15}{Computing Modular Powers}{Outline0.6}% 13
-\BOOKMARK [2][]{Outline0.7}{Finding Large Prime Numbers}{}% 14
-\BOOKMARK [3][]{Outline0.7.1.16}{Searching for a Large Prime}{Outline0.7}% 15
-\BOOKMARK [3][]{Outline0.7.2.17}{Checking if a Number is Prime}{Outline0.7}% 16
-\BOOKMARK [2][]{Outline0.8}{RSA Public-Key Cryptosystem}{}% 17
-\BOOKMARK [3][]{Outline0.8.1.18}{Public-Key Cryptosystems}{Outline0.8}% 18
-\BOOKMARK [3][]{Outline0.8.2.19}{RSA Cryptosystem}{Outline0.8}% 19
+\BOOKMARK [2][]{Outline0.4}{Modular Arithmetic}{}% 4
+\BOOKMARK [3][]{Outline0.4.1.16}{Subgroups}{Outline0.4}% 5
+\BOOKMARK [2][]{Outline0.5}{Solving Modular Linear Equations}{}% 6
+\BOOKMARK [3][]{Outline0.5.1.17}{Solving Modular Linear Equations}{Outline0.5}% 7
+\BOOKMARK [2][]{Outline0.6}{Computing Modular Powers}{}% 8
+\BOOKMARK [3][]{Outline0.6.1.18}{Computing Modular Powers}{Outline0.6}% 9
+\BOOKMARK [2][]{Outline0.7}{Finding Large Prime Numbers}{}% 10
+\BOOKMARK [3][]{Outline0.7.1.19}{Searching for a Large Prime}{Outline0.7}% 11
+\BOOKMARK [3][]{Outline0.7.2.20}{Checking if a Number is Prime}{Outline0.7}% 12
+\BOOKMARK [2][]{Outline0.8}{RSA Public-Key Cryptosystem}{}% 13
+\BOOKMARK [3][]{Outline0.8.1.21}{Public-Key Cryptosystems}{Outline0.8}% 14
+\BOOKMARK [3][]{Outline0.8.2.22}{RSA Cryptosystem}{Outline0.8}% 15
