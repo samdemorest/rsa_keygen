@@ -12,7 +12,7 @@
 \usepackage{amsmath}
 
 \begin{document}
-\title{Chapter 11 Cryptology}   
+\title{Chapter 11 Number-Theoretic Algorithms}   
 \author{Jason Pearson and Sam Demorest} 
 \date{\today} 
 
@@ -43,15 +43,15 @@ First 10 Primes \newline
 	The greatest common divisor is the largest factor for both numbers \newline	
 	This is denoted gcd(n,m) \newline
 	For example gcd(12,15) = 3 \newline \newline
-	For any two integers n and m where m $\ne$ 0 the quotient is n divided by n is given by \newline
+	For any two integers n and m where m $\ne$ 0 the quotient is given by \newline
 	$q = \lfloor n / m \rfloor$\newline
 	The remainder r of dividing n by m is given by \newline
 	$r = n - qm$\newline
 }
 
-\frame{\frametitle{Greatest Common Divsor (cont)}
+\frame{\frametitle{Greatest Common Divisor (cont)}
 	Let n and m be integers, not both 0 and let\newline
-	d = min \{ in + jm such that i,j $\in$ Z and in + jm > 0\}\newline
+	d = min \{ in + jm such that i,j $\in$ Z and in + jm $>$ 0\}\newline
 	That is, d is the smallest positive linear combination of n and m \newline
 	For example we know gcd(12, 8) = 4,\newline the smallest linear combination is \newline
 	$4 = 3(12) + (-4)8$
@@ -132,7 +132,7 @@ First 10 Primes \newline
 
 \frame{\frametitle{Proof Extended Algorithm}
 	Induction Base: In the last recursive call m = 0, which means gcd(n, m) = n\newline
-	Since the values of i and j are assigned values 1 and - respectively we have \newline
+	Since the values of i and j are assigned values 1 and 0 respectively we have \newline
 	$i×n+j×m=1×n+0×m=n=gcd\left(n,m\right)$	\newline \newline
 	Induction Hypothesis: Assume in the kth recursive call the values determined for i and j are such that\newline
 	gcd(n,m) = in + mj \newline
@@ -142,7 +142,7 @@ First 10 Primes \newline
 
 \frame{\frametitle{Proof Extended Algorithm (cont)}
 	Induction Step: We have for the (k - 1)st call that\newline
-	in + mmj = j'n + (i' - $\lfloor n / m \rfloor$ j')m\newline
+	in + mj = j'n + (i' - $\lfloor n / m \rfloor$ j')m\newline
 	\hspace*{1.7cm}= i'm + j'(n - $\lfloor n / m \rfloor$m)\newline
 	\hspace*{1.7cm}= i'm + j'n mod m\newline
 	\hspace*{1.7cm}= gcd(m, n mod m)\newline
@@ -154,36 +154,175 @@ First 10 Primes \newline
 
 \frame{\frametitle{Group Theory}
 	A closed binary operation * on a set S is a rule for combining two elements of S to yield another element of S. \newline
-	This operation is associative, has an identity element and inverse element \newline
+	This operation must be associative\newline
+	Must have an identity element for each element in S\newline
+	For each element in S there must exist an inverse for that element \newline
 	For example with integers $\in$ Z with addition constitute a group. \newline
 	The identity element is 0 and the inverse of a is -a\newline
-	Every element in the group only has one inverse \newline
 	A group is said to be finite if S contains a finite number of elements\newline
-	A group is said to be commutative (or abelian) if for all a, b $\in$ S,
+	A group is said to be commutative (or abelian) if for all a, b $\in$ S \newline
+	$a\ast b=b\ast a$
 }
 
 \frame{\frametitle{Congruency Modulo n}
 	Let m and k be integers and n be a positive integer. If n$\mid$(m - k) we say m is congruent to k modulo n, and this is written by \newline
 	$m\equiv k\mathrm{mod}n$ \newline
 	For Example \newline
-	Since 5$\mid$(33 - 18), $33\equiv 18\mathrm{mod}5$ \newline
-}
-
-\frame{\frametitle{Theorem 11.13 Congruency}
-	Suppose $n_{1},n_{2},...,n_{j}$ are pairwise relatively prime and 
-	n = $n_{1},n_{2},...,n_{j}$
-	Then for all integers m and k
-}
-
-
-\frame{\frametitle{Subgroups}
+	Since 5$\mid$(33 - 18), $33\equiv 18\mathrm{mod}5$ \newline \newline
+	The integers 2, 5, 9 are pairwise prime and \newline
+	$184\equiv 4\mathrm{mod}2$\newline
+	$184\equiv 4\mathrm{mod}5$\newline
+	$184\equiv 4\mathrm{mod}2$\newline
+	Since $2×5×9=90$ this implies $184\equiv 4\mathrm{mod}90$\newline
+	Congruency modulo n is an equivalence relation on the set of all integers.
 	
+}
+
+
+\frame{\frametitle{Equivalence Class Modulo n Containing m}
+	The set of all integers congruent to m modulo n is called the equivalence class modulo n containing m\newline
+	For example the equivalence class modulo 5 containing 13 is \newline
+	$\left\{\dots ,-7,-2,3,8,13,18,23,28,33,\dots \right\}$\newline
+	Equivalence classes modulo n containing m are represented by $[m]_{n}$\newline
+	So for our previous example we would represent it by $[3]_{5}$\newline\newline
+	The set of all equivalence classes modulo n is denoted $\textbf{Z}_{n}$\newline
+	$\textbf{Z}_{n} = \{[0]_{n},[1]_{n},...,[n - 1]_{n}\}$ \newline
+	Example of Addition using $\textbf{Z}_{5} = \{[0]_{5},[1]_{5},[2]_{5},[3]_{5},[4]_{5}\}$\newline
+	$[2]_{5} + [4]_{5} = [6]_{5} = [1]_{5}$\newline
+	For every positive integer n, $(\textbf{Z}_{n}, +)$ is a finite commutative group\newline
+	Every element has an additive inverse so we know the identity element is $[0]_{n}$
+}
+
+\frame{\frametitle{Equivalence Class Modulo n Containing m (cont)}
+	Using $\textbf{Z}_{5} = \{[0]_{5},[1]_{5},[2]_{5},[3]_{5},[4]_{5}\}$\newline
+	For multiplication $[2]_{5} * [4]_{5} = [8]_{5} = [3]_{5}$\newline
+	This isn't always the case though because not every element in $(\textbf{Z}_{n}, ×)$ has a multiplicative inverse\newline 
+	For example we consider $\textbf{Z}_{9}$ \newline
+	Suppose $[6]_{9}$ has a multiplicative inverse $[k]_{9}$. Then \newline
+	${\left[6\right]}_{9}×{\left[k\right]}_{9}={\left[6×k\right]}_{9}={\left[1\right]}_{9}$ \newline
+	Which means there exists an integer i such that\newline
+	1 = 6k + 9i which implies gcd(6,9) = 1 which is not the case\newline
+}
+
+\frame{\frametitle{Equivalence Class Modulo n Containing m (cont)}
+	
+	This will work if we only include the relatively prime numbers for example\newline
+	${z}_{9}^{\ast }=\left\{{\left[1\right]}_{1},{\left[2\right]}_{9},{\left[4\right]}_{9},{\left[5\right]}_{q},{\left[7\right]}_{9},{\left[8\right]}_{9}\right\}$\newline
+	Using $({z}_{9}^{\ast },*)$ we have the following multiplicative inverses \newline
+	${\left[1\right]}_{9} * {\left[1\right]}_{9}={\left[1\right]}_{9}$ \newline
+	${\left[2\right]}_{9} * {\left[5\right]}_{9}={\left[10\right]}_{9}={\left[1\right]}_{9}$ \newline
+	${\left[4\right]}_{9} * {\left[7\right]}_{9}={\left[28\right]}_{9}={\left[1\right]}_{9}$ \newline
+	${\left[8\right]}_{9} * {\left[8\right]}_{9}={\left[64\right]}_{9}={\left[1\right]}_{9}$ \newline
+	The number of elements in ${z}_{n}^{\ast }$ is given by Euler's totient function\newline
+	$\phi \left(n\right)=n\prod _{p:p|n}\left(1-\frac{1}{p}\right)$
+	For example
+	$\phi \left(60\right)=60\prod _{p:p|60}\left(1-\frac{1}{p}\right) = 60\left(1-\frac{1}{2}\right)\left(1-\frac{1}{3}\right)\left(1-\frac{1}{5}\right)=16$\newline
+	If the number is prime the totient function is simply $\phi \left(p\right)=p-1$
+}
+
+
+\frame{\frametitle{SubGroups}
+	If G =  (S, *) is a group, S' $\subseteq $ S, and G' = (S', *) is a group then G' is said to be a subgroup of G. It is a proper subgroup if S' $\ne$ S \newline
+	For E, the set of even integers and Z the set of integers. \newline
+	(E, +) is a proper subgroup of (Z, +)\newline
+	$\mid$S$\mid$ denotes the number of elements in S it has been shown $\mid$S'$\mid$ $\mid$ $\mid$S$\mid$ \newline\newline
+	Suppose we have a finite group G = (S, *) and a $\in$ S.\newline
+	$<a> = \{a^{k}$ such that k is a positive integer $\}$ \newline
+	Clearly $<a>$ is closed under *. So, $(<a>,*)$ is a subgroup of G.\newline
+	This new group is called the subgroup generated by a.\newline
+	If the subgroup genereated by a is G we call a a generator of G \newline
+	For example ($\textbf{Z}_{6} ,+$). We have \newline
+	$<[2]_{6}> = \{[2]_{6}, [2]_{6} + [2]_{6}, [2]_{6} + [2]_{6} + [2]_{6}, ...\}$\newline
+	\hspace*{1.4cm}$= \{[2]_{6},[4]_{6},[0]_{6},[2]_{6},... \}$	
+}
+
+\frame{\frametitle{SubGroups (cont)}
+	When generating a subgroup we can stop once we reach the identity element\newline
+	ord(a) is the least positive integer t such that $a^{t} = e$ where e is the identity element\newline 
+	Consider the group ($\textbf{Z}_{6} ,+$). We have 
+	$<[3]_{6}> = \{[3]_{6}, [3]_{6} + [3]_{6}\} = \{[3]_{6},[0]_{6}\}$\newline
+	and \newline
+	$<[2]_{6}> = \{[2]_{6}, [2]_{6} + [2]_{6}, [2]_{6} + [2]_{6} + [2]_{6}\} = \{[2]_{6},[4]_{6}, [0]_{6}\}$\newline
+	Clearly \newline
+	$<[1]_{6}> = \textbf{Z}_{6}$\newline	
+}
+
+\frame{\frametitle{SubGroups (cont)}
+	Euler proved for any integer n > 1 for all $[m]_{n} \in \textbf{Z}_{n}$ \newline
+	${\left({\left|m\right|}_{n}\right)}^{\phi \left(n\right)}={\left|1\right|}_{n}$ \newline
+	Consider the group $(\textbf{Z}_{20}, *)$ We have that \newline
+	$\phi \left(20\right)=20\prod _{p:p|20}\left(1-\frac{1}{p}\right)=20\left(1-\frac{1}{5}\right)\left(1-\frac{1}{2}\right)=8$\newline
+	and ${\left({\left[3\right]}_{20}\right)}^{8}={\left[6561\right]}_{20}={\left[1\right]}_{20}$\newline
+	\newline
+	Also Fermat has shown that if p is prime then for all $[m]_{p} \in \textbf{Z}_{p}$ \newline
+	${\left({\left[m\right]}_{p}\right)}^{p-1}={\left[1\right]}_{p}$ \newline
+	For example group $(\textbf{Z}_{7}, *)$. We have that\newline
+	${\left({\left[2\right]}_{7}\right)}^{7-1}={\left[64\right]}_{7}={\left[1\right]}_{7}$
 }
 
 \section{Solving Modular Linear Equations}
 
-\frame{\frametitle{Solving Modular Linear Equations}
+\frame{\frametitle{Pre Solving Modular Linear Equations}
+	The modular equation \newline
+	${\left[m\right]}_{n}x={\left[k\right]}_{n}$\newline
+	 for X, where X is an equivalence class modulo n, and m, n $>$ 0. \newline
+	 ${<\left[6\right]>}_{8}=\left\{{\left[0\right]}_{8},{\left[6\right]}_{8},{\left[4\right]}_{8},{\left[2\right]}_{8}\right\}$\newline
+	 the equation \newline
+	${\left[6\right]}_{8}x={\left[K\right]}_{8}$\newline
+	has a solution if and only if $[k]_{8}$ is $[0]_{8},[6]_{8},[4]_{8}, or [2]_{8}$ For example, solutions to \newline
+	${\left[6\right]}_{8}x={\left[4\right]}_{8}$\newline
+	are x = $[2]_{8}$ and x = $[6]_{8}$
+}
+
+\frame{\frametitle{Pre Solving Modular Linear Equations (cont)}
+	Consider the group $(\textbf{Z}_{n}, +)$ For any $[m]_{n} \in  \textbf{Z}_{n}$ we have that
+
+$⟨{\left[m\right]}_{n}⟩=⟨{\left[d\right]}_{n}⟩=\left\{{\left[0\right]}_{n},{\left[d\right]}_{n},{\left[2d\right]}_{n},\dots ,{\left[\left(n∕d-1\right)d\right]}_{n}\right\}$
 	
+	where d = gcd(n, m). This means \newline
+	$ord({\left[m\right]}_{n})=\left|<{\left[m\right]}_{n}>\right|=\frac{n}{d}$\newline
+	\newline
+	The equation $\left[m\right]_{n} x=\left[k\right]_{d}$ \newline
+	has a solution if and only if d $\mid$ where d = gcd(n,m). 
+	Furthermore if the equation has a solution it has d solutions. \newline
+	There is only a solution for every equivalence class $[k]_{n}$ if and only if gcd(n,m) = 1
+
+}
+
+
+\frame{\frametitle{Pre Solving Modular Linear Equations Examples}
+	Using the group $(\textbf{Z}_{8}, +)$. Since gcd(8,5) = 1 \newline
+	So, ${\left[5\right]}_{8}x={\left[k\right]}_{8}$ has exactly one solution when solving for any k that is a member of $<[5]>_{8}$. When k = 3 we know that x = $[7]_{8}$ \newline
+	Using the same group we use 6 instead so gcd(8,6) = 2 \newline
+	So, ${\left[6\right]}_{8}x={\left[k\right]}_{8}$ has exactly two solutions when solving for any k that is a member of $<[6]>_{8}$. When k = 4 we know that x = $[6]_{8}$ and x = $[2]_{8}$ \newline
+	
+}
+
+
+\frame{\frametitle{Solving Modular Linear Equations}
+	Let d = gcd(n,m) and let i and j be integers such that d = in + jm \newline
+	Suppose further d $\mid$ k Then the equation 
+	${\left[m\right]}_{n}x={\left[k\right]}_{n}$ has solution \newline
+	$x={\left[\frac{jk}{d}\right]}_{n}$
+	For example, consider ${\left[6\right]}_{8}x={\left[4\right]}_{8}$ we have gcd(8,6) = 2 \newline
+	2 = (1) 8 + (-1) 6 and 2 $\mid$ 4 so it must have the solution \newline
+	$x={\left[\frac{-1\left(4\right)}{2}\right]}_{8}={\left[-2\right]}_{8}={\left[6\right]}_{\delta }$
+	This is only one solution though to solve the other we use the equation \newline
+	${\left[j+\frac{wn}{d}\right]}_{n}$ for $w=0,1,\dots ,d-1$ \newline
+	So for the other solution we have\newline
+	${\left[6+\frac{1\left(8\right)}{2}\right]}_{8}={\left[10\right]}_{8}={\left[2\right]}_{8}$
+}
+
+\frame{\frametitle{Psuedocode For Solving Modular Linear Equations}
+	void solvelinear ( int n, int m, int k) \newline
+	\hspace*{1cm}index l;\newline
+	\hspace*{1cm}int i, j, d;\newline
+	\hspace*{1cm}Euclid(n,m,d,i,j);\newline
+	\hspace*{1cm}if (d$\mid$k)\newline
+	\hspace*{2cm}for(w = 0; w <= d - 1; w++)\newline
+	\hspace*{3cm}cout << ${\left[\frac{jk}{d}+\frac{wn}{d}\right]}_{n};$
+	
+	Worst Case Time Complexity is Exponential in terms of input size
 }
 
 \section{Computing Modular Powers}

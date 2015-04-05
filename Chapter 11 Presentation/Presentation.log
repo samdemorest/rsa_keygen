@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  1 APR 2015 19:11
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  5 APR 2015 16:34
 entering extended mode
 **Presentation.tex
 
@@ -1064,11 +1064,23 @@ Missing character: There is no — in font cmss10!
 
 ] [14
 
-] [15
+]
+Missing character: There is no Ã in font cmss10!
+Missing character: There is no — in font cmss10!
+Missing character: There is no Ã in font cmss10!
+Missing character: There is no — in font cmss10!
+ [15
 
 ] [16
 
-] [17
+]
+Missing character: There is no Ã in font cmss10!
+Missing character: There is no — in font cmss10!
+Missing character: There is no Ã in font cmss10!
+Missing character: There is no — in font cmss10!
+Missing character: There is no Ã in font cmss10!
+Missing character: There is no — in font cmss10!
+ [17
 
 ] [18
 
@@ -1082,18 +1094,52 @@ Missing character: There is no — in font cmss10!
 ] [22
 
 ]
+Missing character: There is no â in font cmss10!
+Missing character: There is no Ÿ in font cmss10!
+Missing character: There is no ¨ in font cmss10!
+Missing character: There is no â in font cmss10!
+Missing character: There is no Ÿ in font cmss10!
+Missing character: There is no © in font cmss10!
+Missing character: There is no â in font cmss10!
+Missing character: There is no Ÿ in font cmss10!
+Missing character: There is no ¨ in font cmss10!
+Missing character: There is no â in font cmss10!
+Missing character: There is no Ÿ in font cmss10!
+Missing character: There is no © in font cmss10!
+Missing character: There is no â in font cmss10!
+Missing character: There is no ˆ in font cmss10!
+Missing character: There is no • in font cmss10!
+ [23
+
+] [24
+
+] [25
+
+] [26
+
+] [27
+
+] [28
+
+] [29
+
+] [30
+
+] [31
+
+]
 \tf@nav=\write6
 \tf@toc=\write7
 \tf@snm=\write8
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 220.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 220.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 363.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 363.
 
 ("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\Chapter 11 Presentation\Present
 ation.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 220.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 220.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 363.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 363.
 Package rerunfilecheck Info: File `Presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 944C94C17F7443C1C79AD1EA5E06338E;1001.
+(rerunfilecheck)             Checksum: 477CB6C9E5093D023F76BBE5CCBBCE35;856.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1102,27 +1148,31 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 220.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 363.
  ) 
 Here is how much of TeX's memory you used:
- 16590 strings out of 493921
- 320081 string characters out of 3144866
- 381383 words of memory out of 3000000
- 19442 multiletter control sequences out of 15000+200000
- 10990 words of font info for 40 fonts, out of 3000000 for 9000
+ 16626 strings out of 493921
+ 320514 string characters out of 3144866
+ 384376 words of memory out of 3000000
+ 19461 multiletter control sequences out of 15000+200000
+ 11872 words of font info for 43 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  56i,14n,55p,414b,549s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:
-/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Progra
-m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program F
-iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Presentation.pdf (22 pages, 206995 bytes).
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/P
+rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Prog
+ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x
+86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Presentation.pdf (31 pages, 299303 bytes).
 PDF statistics:
- 693 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 500000)
- 163 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 929 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 500000)
+ 147 words of extra memory for PDF output out of 10000 (max. 10000000)
 
