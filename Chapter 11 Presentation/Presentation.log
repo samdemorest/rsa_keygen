@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  5 APR 2015 16:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  5 APR 2015 20:07
 entering extended mode
 **Presentation.tex
 
@@ -1064,12 +1064,7 @@ Missing character: There is no — in font cmss10!
 
 ] [14
 
-]
-Missing character: There is no Ã in font cmss10!
-Missing character: There is no — in font cmss10!
-Missing character: There is no Ã in font cmss10!
-Missing character: There is no — in font cmss10!
- [15
+] [15
 
 ] [16
 
@@ -1094,18 +1089,6 @@ Missing character: There is no — in font cmss10!
 ] [22
 
 ]
-Missing character: There is no â in font cmss10!
-Missing character: There is no Ÿ in font cmss10!
-Missing character: There is no ¨ in font cmss10!
-Missing character: There is no â in font cmss10!
-Missing character: There is no Ÿ in font cmss10!
-Missing character: There is no © in font cmss10!
-Missing character: There is no â in font cmss10!
-Missing character: There is no Ÿ in font cmss10!
-Missing character: There is no ¨ in font cmss10!
-Missing character: There is no â in font cmss10!
-Missing character: There is no Ÿ in font cmss10!
-Missing character: There is no © in font cmss10!
 Missing character: There is no â in font cmss10!
 Missing character: There is no ˆ in font cmss10!
 Missing character: There is no • in font cmss10!
@@ -1170,7 +1153,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Program File
 s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program Files 
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Presentation.pdf (31 pages, 299303 bytes).
+Output written on Presentation.pdf (31 pages, 300626 bytes).
 PDF statistics:
  929 PDF objects out of 1000 (max. 8388607)
  76 named destinations out of 1000 (max. 500000)
