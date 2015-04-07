@@ -29,16 +29,8 @@ fn main() {
     } else {
         panic!("Needs an argument for key bit size!");
     }
-    let mut bignum: BigUint;
-    let mut rnjesus = rand::OsRng::new().unwrap();
-    let modexp: BigUint = mod_exp(BigUint::from_usize(5).unwrap(), 
-                                  BigUint::from_usize(45).unwrap(),
-                                  BigUint::from_usize(257).unwrap());
-    println!("MODEXP: {}", modexp);
-    bignum = rnjesus.gen_biguint(bit_size);
-    write_bnum(bignum.clone());
-    //gen_large_prime(bit_size);
-    bigint_exp(BigUint::from_usize(2).unwrap(), BigUint::from_usize(8).unwrap());
+    gen_large_prime(bit_size);
+    //bigint_exp(BigUint::from_usize(2).unwrap(), BigUint::from_usize(8).unwrap());
 
 }
 
@@ -46,12 +38,13 @@ fn gen_large_prime(bit_size: usize){
     let mut bignum: BigUint;
     let mut rnjesus = rand::OsRng::new().unwrap();
     let mut is_prime: bool = false;
-    let max_exp: u64 = 
-        bit_size.add(1.to_usize().unwrap()).to_f64().unwrap().log2().ceil().to_u64().unwrap();
+    //let max_exp: u64 = 
+    //    bit_size.add(1.to_usize().unwrap()).to_f64().unwrap().log2().ceil().to_u64().unwrap();
     
-    while is_prime  == false{
+    while !is_prime{
        bignum = rnjesus.gen_biguint(bit_size);
        if bignum.clone().is_even(){
+           println!("Even number discarded...");
            continue;
        } 
        /*
@@ -59,7 +52,8 @@ fn gen_large_prime(bit_size: usize){
         *   possibility that the test gives an inaccurate result is 25%. 0.25^5 = 0.0009765, which
         *   is an acceptable threshold of accuracy.
         */
-       is_prime = miller_rabin(bignum.clone(), 5);
+       println!("Getting value for is_prime via Miller-Rabin");
+       is_prime = miller_rabin(bignum.clone(), 2);
        if is_prime{
            println!("Prime discovered: {}", bignum.clone());
        }
@@ -67,25 +61,54 @@ fn gen_large_prime(bit_size: usize){
 
 }
 
-
+/**
+ * The Miller-Rabin Primality Test implemented. Seems to return prime numbers.
+ */
 fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
+    println!("Entering miller-rabin");
     let mut rnjesus = rand::OsRng::new().unwrap();
     let k: usize = num_runs;
     let mut a: BigUint;
     let mut x: BigUint;
+    println!("Getting d and s.");
     let (d,s) = get_ds(bignum.clone());
-    for i in 0..num_runs {
+    for i in 1..k{
+        println!("i = {} in 1..k", i);
+        /* TODO: Got a panic coming from the line below. bignum must be > 4. This shouldn't be a
+         * problem, but to keep the program from barfing all over everything, we really should
+         * check the value of bignum before we send it down here.
+         */
+        if bignum.lt(&BigUint::from_usize(5).unwrap()){
+            // Just to solve the above panic for now, for testing very small values.
+            return false;
+        }
         a = rnjesus.gen_biguint_range(&BigUint::from_usize(2).unwrap(), 
-                                                   &bignum.clone().sub(BigUint::one()));
-        x = bigint_exp(a.clone(), d.clone());
-
-
+                                      &bignum.clone().sub(BigUint::from_usize(2).unwrap()));
+        println!("found a: {}", a);
+        x = mod_exp(a.clone(), d.clone(), bignum.clone());
+        println!("Finished mod_exp");
+        if x.ne(&BigUint::one()) && x.ne(&bignum.clone().sub(BigUint::one())){
+            for r in 1..s{
+                println!("r = {}, s = {}", r, s);
+                x = mod_exp(x, BigUint::from_usize(2).unwrap(), bignum.clone());
+                if x.eq(&BigUint::one()){
+                    return false
+                } else if x.eq(&bignum.clone().sub(BigUint::one())){
+                    a = BigUint::zero();
+                    break;
+                }
+            } // end for r in 1..s
+            if a.ne(&BigUint::zero()){
+                return false
+            }
+        }
     }
-    return false;
+    return true
 }
 
 /**
  * Gets the result of [base_modulo]^power
+ * TODO: This needs to be optimized if this is going to be a practical key generator.
  */
 fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let mut retval: BigUint = power.clone();
@@ -117,14 +140,20 @@ fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
  * Get d and s for use in calculation in Miller-Rabin test
  */
 fn get_ds(bignum: BigUint) -> (BigUint, usize){
+    println!("In get_ds");
     let mut test = bignum.clone().sub(BigUint::one());
     let mut s: usize = 0;
+    /*
+     * TODO: Sometimes this will hit zero when n-1 is even. Gotta figure this one out.
+     */
     while test.is_even(){
+        println!("In loop determining if 'test' is even: {}", test);
         test = test.div(BigUint::from_usize(2).unwrap());
         s += 1;
     }
     return (test.clone(), s)
 }
+
 /**
  * This function writes the bytes of a BigUint to a file.
  */
