@@ -11,6 +11,8 @@
 \usepackage{multicol}
 \usepackage{amsmath}
 
+\usetheme{Warsaw}
+
 \begin{document}
 \title{Chapter 11 Number-Theoretic Algorithms}   
 \author{Jason Pearson and Sam Demorest} 
@@ -19,9 +21,7 @@
 \frame{\titlepage} 
 
 \frame{
-	\begin{multicols}{1}
 	\frametitle{Overview}\tableofcontents
-	\end{multicols}
 } 
 
 
@@ -64,21 +64,13 @@ First 10 Primes \newline
 	\hspace*{2.45cm} = 8 \newline
 }
 
-
-\frame{\frametitle{Least Common Multiple}
-	For n and m where they are both nonzero, the least common multiple is denoted lcm(n,m)\newline
-	For example lcm(6,9) = 18 because 6$\mid$18 and 9 $\mid$18\newline
-	The lcm(n,m) is a product of primes that are common to m and n, where the power of each prime in the product is the larger of its orders in n and m\newline
-	So $12={2}^{2}×{3}^{1}$ and $45={3}^{2}×{5}^{1}$\newline
-	so lcm(12,45) = ${2}^{2}×{3}^{2}×{5}^{1}$ = 180
-}
-
 \frame{\frametitle{Prime Factorization}
 	Two integers are relatively prime because the gcd of them is 1 \newline
 	For example gcd(12, 25) = 1 so they are relatively prime \newline
 	If h and m are relatively prime and h divides nm, then h divides m.\newline
 	That is gcd(h,m) = 1 and h$\mid$nm implies h$\mid$n \newline
 }
+
 
 \frame{\frametitle{Prime Factorization (cont)}
 	Every integer X $>$ 1 can be written as a unique product of primes \newline
@@ -90,6 +82,16 @@ First 10 Primes \newline
 	7,276,500 = ${2}^{2}{3}^{3}{5}^{3}{7}^{2}{11}^{1}$\newline
 	We then take the common divisors and take the lower power to create the gcd \newline
 	so gcd(3,185,325, 7,276,500) = ${3}^{3}{5}^{2}{11}^{1}$ = 7,425
+}
+
+
+
+\frame{\frametitle{Least Common Multiple}
+	For n and m where they are both nonzero, the least common multiple is denoted lcm(n,m)\newline
+	For example lcm(6,9) = 18 because 6$\mid$18 and 9 $\mid$18\newline
+	The lcm(n,m) is a product of primes that are common to m and n, where the power of each prime in the product is the larger of its orders in n and m\newline
+	So $12={2}^{2}×{3}^{1}$ and $45={3}^{2}×{5}^{1}$\newline
+	so lcm(12,45) = ${2}^{2}×{3}^{2}×{5}^{1}$ = 180
 }
 
 
@@ -121,6 +123,39 @@ First 10 Primes \newline
 	\hspace*{1cm}\}\newline
 	\}
 }
+
+\frame{\frametitle{Time Complexity}
+	Basic Operation: one bit manipulation in the computation of the remainder.\newline
+	Input Size: The number of bits it takes to encode the input \newline
+	s = $\lceil lg n \rceil + 1$ \newline
+	t = $\lceil lg m \rceil + 1$ \newline
+	We will analyze when $1 \le m < n$. If m = n then there will be no recursive calls \newline
+	If m $>$ n, the first recursive call will be gcd(m,n) instead to keep the first element larger\newline
+	It has been shown that the worst case calls $ Wcalls(s,t) \in \theta(t)$\newline
+}
+
+\frame{\frametitle{Time Complexity (cont)}
+	
+	For each recursive call we compute one remainder which in the worst case number of bit manipulations is bounded from above by \newline
+	$c \lceil (1 + lg q) lg m \rceil$ where q is the quotient of dividing n by m and c is a constant \newline
+	For r $>$ 0 the worst case number of bit manipulations is \newline
+	$c \lceil (1 + lg n) lg m  - lg m \times lg r\rceil$\newline
+	Now with worst case number of bit manipulations considered we know $q = (n - r) / m$ and $1 \le r < m$\newline
+	$1 + lg q = 1 + lg((n - r) / m)$ \newline
+	\hspace*{1.4cm}$\le 1 + lg((n - r)  / r)$ \newline
+	\hspace*{1.4cm}$\le 1 + lg(n - r)$ \newline
+	\hspace*{1.4cm}$\le 1 + lg n - lg r$ \newline
+	
+	
+}
+
+\frame{\frametitle{Time Complexity (cont)}
+	This last equality combined with the worst case for number of bit manipulations and recursive calls results is bounded from above by \newline
+	$= c\lceil lg n \times lg m + lg m + lg r + lg(m mod r) + \dots \rceil$
+	Since $n > m > r > m mod r > \dots$ where the dots denote the remaining terms. \newline
+	We conclude $W(s,t) \in O(st)$	
+}
+
 
 \frame{\frametitle{Why Use the Other Algorithm?}
 	This other algorithm will give us integers i and j as well \newline
@@ -214,10 +249,10 @@ First 10 Primes \newline
 	${\left[4\right]}_{9} * {\left[7\right]}_{9}={\left[28\right]}_{9}={\left[1\right]}_{9}$ \newline
 	${\left[8\right]}_{9} * {\left[8\right]}_{9}={\left[64\right]}_{9}={\left[1\right]}_{9}$ \newline
 	The number of elements in ${z}_{n}^{\ast }$ is given by Euler's totient function\newline
-	$\phi \left(n\right)=n\prod _{p:p|n}\left(1-\frac{1}{p}\right)$
+	$\varphi \left(n\right)=n\prod _{p:p|n}\left(1-\frac{1}{p}\right)$
 	For example
-	$\phi \left(60\right)=60\prod _{p:p|60}\left(1-\frac{1}{p}\right) = 60\left(1-\frac{1}{2}\right)\left(1-\frac{1}{3}\right)\left(1-\frac{1}{5}\right)=16$\newline
-	If the number is prime the totient function is simply $\phi \left(p\right)=p-1$
+	$\varphi \left(60\right)=60\prod _{p:p|60}\left(1-\frac{1}{p}\right) = 60\left(1-\frac{1}{2}\right)\left(1-\frac{1}{3}\right)\left(1-\frac{1}{5}\right)=16$\newline
+	If the number is prime the totient function is simply $\varphi \left(p\right)=p-1$
 }
 
 
@@ -230,7 +265,7 @@ First 10 Primes \newline
 	$\langle a\rangle = \{a^{k}$ such that k is a positive integer $\}$ \newline
 	Clearly $\langle a\rangle$ is closed under $\times$. So, $(\langle a\rangle,\times)$ is a subgroup of G.\newline
 	This new group is called the subgroup generated by a.\newline
-	If the subgroup genereated by a is G we call a a generator of G \newline
+	If the subgroup generated by a is G we call a a generator of G \newline
 	For example ($\textbf{Z}_{6} ,+$). We have \newline
 	$\langle[2]_{6}\rangle = \{[2]_{6}, [2]_{6} + [2]_{6}, [2]_{6} + [2]_{6} + [2]_{6}, ...\}$\newline
 	\hspace*{1.4cm}$= \{[2]_{6},[4]_{6},[0]_{6},[2]_{6},... \}$	
@@ -249,9 +284,9 @@ First 10 Primes \newline
 
 \frame{\frametitle{SubGroups (cont)}
 	Euler proved for any integer n $>$ 1 for all $[m]_{n} \in \textbf{Z}_{n}$ \newline
-	${\left({\left|m\right|}_{n}\right)}^{\phi \left(n\right)}={\left|1\right|}_{n}$ \newline
+	${\left({\left|m\right|}_{n}\right)}^{\varphi \left(n\right)}={\left|1\right|}_{n}$ \newline
 	Consider the group $(\textbf{Z}_{20}, \times)$ We have that \newline
-	$\phi \left(20\right)=20\prod _{p:p|20}\left(1-\frac{1}{p}\right)=20\left(1-\frac{1}{5}\right)\left(1-\frac{1}{2}\right)=8$\newline
+	$\varphi \left(20\right)=20\prod _{p:p|20}\left(1-\frac{1}{p}\right)=20\left(1-\frac{1}{5}\right)\left(1-\frac{1}{2}\right)=8$\newline
 	and ${\left({\left[3\right]}_{20}\right)}^{8}={\left[6561\right]}_{20}={\left[1\right]}_{20}$\newline
 	\newline
 	Also Fermat has shown that if p is prime then for all $[m]_{p} \in \textbf{Z}_{p}$ \newline
@@ -306,7 +341,7 @@ $\langle{\left[m\right]}_{n}\rangle=\langle {\left[d\right]}_{n}\rangle =\left\{
 	$x={\left[\frac{jk}{d}\right]}_{n}$
 	For example, consider ${\left[6\right]}_{8}x={\left[4\right]}_{8}$ we have gcd(8,6) = 2 \newline
 	2 = (1) 8 + (-1) 6 and 2 $\mid$ 4 so it must have the solution \newline
-	$x={\left[\frac{-1\left(4\right)}{2}\right]}_{8}={\left[-2\right]}_{8}={\left[6\right]}_{8}$
+	$x={\left[\frac{-1\left(4\right)}{2}\right]}_{8}={\left[-2\right]}_{8}={\left[6\right]}_{8}$\newline
 	This is only one solution though to solve the other we use the equation \newline
 	${\left[j+\frac{wn}{d}\right]}_{n}$ for $w=0,1,\dots ,d-1$ \newline
 	So for the other solution we have\newline
@@ -315,50 +350,26 @@ $\langle{\left[m\right]}_{n}\rangle=\langle {\left[d\right]}_{n}\rangle =\left\{
 
 \frame{\frametitle{Psuedocode For Solving Modular Linear Equations}
 	void solvelinear ( int n, int m, int k) \newline
+	\{ \newline
 	\hspace*{1cm}index l;\newline
 	\hspace*{1cm}int i, j, d;\newline
 	\hspace*{1cm}Euclid(n,m,d,i,j);\newline
-	\hspace*{1cm}if (d$\mid$k)\newline
-	\hspace*{2cm}for(w = 0; w $<=$ d - 1; w++)\newline
-	\hspace*{3cm}cout $<<$ ${\left[\frac{jk}{d}+\frac{wn}{d}\right]}_{n};$
-	
-	Worst Case Time Complexity is Exponential in terms of input size
+	\hspace*{1cm}if (d$\mid$k) \{\newline
+	\hspace*{2cm}for(w = 0; w $\le$ d - 1; w++) \{\newline
+	\hspace*{3cm}cout $<<$ ${\left[\frac{jk}{d}+\frac{wn}{d}\right]}_{n};$\newline
+	\hspace*{2cm} \} \newline
+	\hspace*{1cm} \} \newline
+	\}
 }
 
-\section{Computing Modular Powers}
-
-\subsection{Computing Modular Powers}
-\frame{\frametitle{Computing Modular Powers}
-	
+\frame{\frametitle{Time Complexity Analysis}
+	The input size in our linear solver is the number of bits it takes to encode input \newline
+	s = $\lceil lg n \rceil + 1$ \newline
+	t = $\lceil lg m \rceil + 1$ \newline
+	u = $\lceil lg k \rceil + 1$ \newline
+	The time complexity for Euclid's Algorithm is O(st), plus the time complexity for the for-w loop.\newline
+	Since d can be as large as m or n, this time complexity is worst-case exponential in terms of input size. \newline
 }
-
-\section{Finding Large Prime Numbers}
-
-\subsection{Searching for a Large Prime}
-\frame{\frametitle{Searching for a Large Prime}
-	
-}
-
-\subsection{Checking if a Number is Prime}
-\frame{\frametitle{Checking if a Number is Prime}
-	
-}
-
-\section{RSA Public-Key Cryptosystem}
-
-
-\subsection{Public-Key Cryptosystems}
-\frame{\frametitle{Public-Key Cryptosystems}
-	
-}
-
-\subsection{RSA Cryptosystem}
-\frame{\frametitle{RSA Cryptosystem}
-	
-}
-
-
-
 
 \end{document}
 
