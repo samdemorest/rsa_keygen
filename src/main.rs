@@ -1,23 +1,21 @@
 #![feature(core)]
-#![feature(old_io)]
-#![feature(old_path)]
+#![feature(convert)]
 extern crate num;
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
 extern crate rand;
 extern crate core;
 use num::traits::*;
 use num::integer::Integer;
 use num::bigint::{BigUint, ToBigUint, RandBigInt};
-use std::num::{FromPrimitive, ToPrimitive, Float};
-use std::old_io as io;
-use std::old_io::File;
+use std::io::prelude::*;
+use std::fs::File;
+use std::path::Path;
+use std::error::Error;
 use rustc_serialize::base64::*;
 use rand::Rng;
 use core::ops::*;
 use std::{env, fmt, usize};
-use rand::Rng;
 use num::bigint::BigInt::*;
-use std::{env};
 
 /*
  * Main driver for the program. Lots of experimentation going on here on how to do various tasks
@@ -31,6 +29,14 @@ fn main() {
     } else {
         panic!("Needs an argument for key bit size!");
     }
+    let mut bignum: BigUint;
+    let mut rnjesus = rand::OsRng::new().unwrap();
+    let modexp: BigUint = mod_exp(BigUint::from_usize(5).unwrap(), 
+                                  BigUint::from_usize(45).unwrap(),
+                                  BigUint::from_usize(257).unwrap());
+    println!("MODEXP: {}", modexp);
+    bignum = rnjesus.gen_biguint(bit_size);
+    write_bnum(bignum.clone());
     //gen_large_prime(bit_size);
     bigint_exp(BigUint::from_usize(2).unwrap(), BigUint::from_usize(8).unwrap());
 
@@ -64,14 +70,10 @@ fn gen_large_prime(bit_size: usize){
 
 fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
     let mut rnjesus = rand::OsRng::new().unwrap();
-    let mut d: BigUint = bignum.clone().sub(BigUint::one());
+    let k: usize = num_runs;
     let mut a: BigUint;
     let mut x: BigUint;
-    let mut s: usize = 0;
-    while d.is_even() {
-        s += 1;
-        d = d.clone().div(BigUint::from_usize(2).unwrap());
-    }
+    let (d,s) = get_ds(bignum.clone());
     for i in 0..num_runs {
         a = rnjesus.gen_biguint_range(&BigUint::from_usize(2).unwrap(), 
                                                    &bignum.clone().sub(BigUint::one()));
@@ -82,12 +84,24 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
     return false;
 }
 
-fn mod_exp(d: BigUint, n: BigUint) -> BigUint{
-    let mut retval: BigUint;
+/**
+ * Gets the result of [base_modulo]^power
+ */
+fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+    let mut retval: BigUint = power.clone();
+    let mut c: BigUint = BigUint::one();
+    let mut i: BigUint = BigUint::one();
+    while i.le(&power){
+        c = (base.clone().mul(c)).mod_floor(&modulo);
+        i = i.add(BigUint::one());
+    }
 
-    return n;
+    return c;
 }
 
+/**
+ * Raises a BigUint to the power of another BigUint
+ */
 fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
     let b: BigUint = base.clone();
     let mut retval: BigUint = base.clone();
@@ -98,19 +112,46 @@ fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
     }
     return retval;
 }
+
+/**
+ * Get d and s for use in calculation in Miller-Rabin test
+ */
+fn get_ds(bignum: BigUint) -> (BigUint, usize){
+    let mut test = bignum.clone().sub(BigUint::one());
+    let mut s: usize = 0;
+    while test.is_even(){
+        test = test.div(BigUint::from_usize(2).unwrap());
+        s += 1;
+    }
+    return (test.clone(), s)
+}
 /**
  * This function writes the bytes of a BigUint to a file.
  */
 fn write_bnum(bignum: BigUint){
-    let mut file = File::create(&Path::new("outfile"));
+    let path = Path::new("outfile");
+    let mut f = match File::create(&path){
+        Err(why) => panic!("Couldn't create {}: {}",
+                           path.display(),
+                           Error::description(&why)),
+        Ok(f) => f,
+    };
     let testnum = [65, 65, 65, 65];
     let bignum_bytes: Vec<u8> = bignum.to_bytes_le();
     //println!("{}", testnum.to_base64(STANDARD));
-    file.write_all(b"ssh-rsa ");
+    match f.write_all(b"ssh-rsa "){
+        Err(why) => panic!("Couldn't write: {}",
+                           Error::description(&why)),
+        Ok(res) => res,
+    };
     let bigslice = bignum_bytes.as_slice();
     //println!("{}",bigslice.to_base64(STANDARD));
-    let formatted = format!("{}", bigslice.to_base64(STANDARD));
-    file.write_all(formatted.as_bytes());
+    let formatted = format!("{}\n", bigslice.to_base64(STANDARD));
+    match f.write_all(formatted.as_bytes()){
+        Err(why) => panic!("Couldn't write: {}",
+                           Error::description(&why)),
+        Ok(res) => res,
+    };
     
 }
 
@@ -167,9 +208,9 @@ fn is_perfect_power(n: BigUint, k: BigUint, j: usize) -> bool {
 #[cfg(test)]
 mod tests {
     extern crate num;
-    use super::{bigint_exp, check_primality, is_perfect_power};
-    use std::num::{FromPrimitive, ToPrimitive};
+    use super::{bigint_exp, check_primality, is_perfect_power, mod_exp};
     use num::bigint::BigUint;
+    use num::traits::*;
 
     #[test]
     fn test_perfect_power(){
@@ -187,5 +228,13 @@ mod tests {
         assert_eq!(bigint_exp(BigUint::from_usize(2).unwrap(), 
                               BigUint::from_usize(8).unwrap()),
                               BigUint::from_usize(256).unwrap());
+    }
+
+    #[test]
+    fn test_mod_exp(){
+        assert_eq!(mod_exp(BigUint::from_usize(5).unwrap(), 
+                           BigUint::from_usize(45).unwrap(),
+                           BigUint::from_usize(257).unwrap()),
+                           BigUint::from_usize(147).unwrap());
     }
 }
