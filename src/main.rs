@@ -2,6 +2,7 @@ extern crate num;
 extern crate "rustc-serialize" as rustc_serialize;
 extern crate rand;
 use num::bigint::BigUint;
+use num::bigint::BigInt;
 use num::bigint;
 use num::bigint::{ToBigUint, RandBigInt};
 use std::fmt;
@@ -53,20 +54,12 @@ fn main() {
 
 	let mut d = find_modular_inverse((&e),(&totient));
 
+	let mut tempOne = BigInt::parse_bytes("17".as_bytes(),10).unwrap();
+	let mut tempTwo = BigInt::parse_bytes("3120".as_bytes(),10).unwrap();
+
+	let mut d = inverse(&tempOne, &tempTwo);
+
 	println!("Value of d = {}", d);
-
-	let mut i = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-	let mut j = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-	let mut gcd = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-
-	extended_euclids_function(&mut &p,&mut &q,&mut &gcd,&mut &i,&mut &j);
-
-	println!("Value of p = {}", p);
-	println!("Value of q = {}", q);
-	println!("Value of gcd = {}", gcd);
-	println!("Value of i = {}", i);
-	println!("Value of j = {}", j);
-
 }
 
 fn find_modular_inverse(e: &num::bigint::BigUint, totient: &num::bigint::BigUint) -> num::bigint::BigUint {
@@ -122,31 +115,63 @@ fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::
 	}
 }
 
-fn extended_euclids_function(n: &mut &num::bigint::BigUint, m: &mut &num::bigint::BigUint, gcd: &mut &num::bigint::BigUint, i: &mut &num::bigint::BigUint, j: &mut &num::bigint::BigUint)
-{
-	if((*m) == &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap())
-	{
-		let mut gcd = &mut (*n).clone();
-		let mut i = &mut BigUint::parse_bytes("1".as_bytes(),10).unwrap();
-		let mut j = &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+// fn extended_euclids_function(n: &mut &num::bigint::BigUint, m: &mut &num::bigint::BigUint, gcd: &mut &num::bigint::BigUint, i: &mut &num::bigint::BigUint, j: &mut &num::bigint::BigUint)
+// {
+// 	if((*m) == &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap())
+// 	{
+// 		let mut gcd = &mut (*n).clone();
+// 		let mut i = &mut BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+// 		let mut j = &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap();
 	
-		//debugging area
-		println!("About to pop out of recursion");
-		println!("Value of gcd = {}", gcd);
-		println!("Value of i = {}", i);
-		println!("Value of j = {}", j);
+// 		//debugging area
+// 		println!("About to pop out of recursion");
+// 		println!("Value of gcd = {}", gcd);
+// 		println!("Value of i = {}", i);
+// 		println!("Value of j = {}", j);
 
-	} else {
-		let mut iprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-		let mut jprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-		let mut gcdprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-		let mut modval = ((*n).clone() % (*m).clone());
-		extended_euclids_function(m, &mut &modval , &mut &gcdprime, &mut &iprime, &mut &jprime);
-		let mut gcd = &mut gcdprime;
-		let mut i = &mut jprime;
-		let mut j = &mut (iprime - ((*i).clone() * ((*n).clone() / (*m).clone()))); 
+// 	} else {
+// 		let mut iprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+// 		let mut jprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+// 		let mut gcdprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+// 		let mut modval = ((*n).clone() % (*m).clone());
+// 		extended_euclids_function(m, &mut &modval , &mut &gcdprime, &mut &iprime, &mut &jprime);
+// 		let mut gcd = &mut gcdprime;
+// 		let mut i = &mut jprime;
+// 		let mut j = &mut (iprime - ((*i).clone() * ((*n).clone() / (*m).clone()))); 
+// 	}
+// }
+
+fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::BigInt {
+	let mut t = BigInt::parse_bytes("0".as_bytes(),10).unwrap();
+	let mut r = (*n).clone();
+	let mut newt = BigInt::parse_bytes("1".as_bytes(),10).unwrap();
+	let mut newr = (*a).clone();
+
+	while newr != BigInt::parse_bytes("0".as_bytes(), 10).unwrap()
+	{
+		let mut quotient = r.clone() / newr.clone();
+
+		let mut tempOne = t.clone() - (quotient.clone() * newt.clone());
+		let mut tempTwo = r.clone() - (quotient.clone() * newr.clone());
+		t = newt;
+		newt = tempOne;
+		r = newr;
+		newr = tempTwo;
+
+		//if r > BigInt::parse_bytes("1".as_bytes(),10).unwrap() 
+		//{
+		//	return BigInt::parse_bytes("1337".as_bytes(),10).unwrap();
+		//}
+		if t < BigInt::parse_bytes("0".as_bytes(),10).unwrap() 
+		{
+			let mut tempThree = t + (*n).clone();
+			t = tempThree;
+		}	
 	}
+	return t;
 }
+
+
 /**
  *  This function returns the euler's totient value based on given numbers p, q and n
  */
