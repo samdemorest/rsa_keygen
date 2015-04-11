@@ -1,6 +1,0 @@
-\beamer@endinputifotherversion {3.33pt}
-\beamer@sectionintoc {1}{Number Theory Review}{3}{0}{1}
-\beamer@sectionintoc {2}{Greatest Common Divisor}{4}{0}{2}
-\beamer@sectionintoc {3}{Euclid's Algorithm}{9}{0}{3}
-\beamer@sectionintoc {4}{Modular Arithmetic}{17}{0}{4}
-\beamer@sectionintoc {5}{Solving Modular Linear Equations}{25}{0}{5}

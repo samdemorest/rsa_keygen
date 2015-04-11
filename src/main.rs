@@ -24,7 +24,7 @@ fn main() {
     let mut optional: num::bigint::BigUint;
     let mut bignum: num::bigint::BigUint;
     let mut rnjesus = rand::thread_rng();
-    bignum = generate_large_prime_number(bit_size);
+    bignum = BigUint::parse_bytes("61".as_bytes(),10).unwrap(); //generate_large_prime_number(bit_size);
     let mut big_vec: Vec<num::bigint::BigUint> = Vec::new();
     println!("Big number incoming: {}", bignum);
     for _ in 0..100 {
@@ -35,40 +35,62 @@ fn main() {
 	let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
 	let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
 	
+
+	println!("Value of p = {}", p);
+	println!("Value of q = {}", q);
+
 	let mut n = (&p) * (&q);
+
+	println!("Value of n = {}", n);
 	
 	let mut totient = euler_totient(&p,&q,&n);
-	let mut e = generate_e((&totient), bit_size);
+
+	println!("Value of totient = {}", totient);
+
+	let mut e = generate_e((&totient));
+
+	println!("Value of e = {}", e);
+
 	let mut d = find_modular_inverse((&e),(&totient));
+
+	println!("Value of d = {}", d);
+
+	let mut i = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+	let mut j = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+	let mut gcd = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+
+	extended_euclids_function(&mut &p,&mut &q,&mut &gcd,&mut &i,&mut &j);
+
+	println!("Value of p = {}", p);
+	println!("Value of q = {}", q);
+	println!("Value of gcd = {}", gcd);
+	println!("Value of i = {}", i);
+	println!("Value of j = {}", j);
+
 }
 
 fn find_modular_inverse(e: &num::bigint::BigUint, totient: &num::bigint::BigUint) -> num::bigint::BigUint {
 	return ((BigUint::parse_bytes("1".as_bytes(),10).unwrap() / e) % totient);
 }
 
-fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::BigUint {
-	let mut e = generate_large_prime_number(bit_size);
-	if &e < totient {
-		if totient % &e != BigUint::parse_bytes("0".as_bytes(),10).unwrap() {
-			return e;
-		} 
+fn generate_e(totient: &num::bigint::BigUint) -> num::bigint::BigUint {
+	
+	//This would get a numbr from sam's class to get the e value that is random
+	let mut e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
+	
+	while e > (*totient)
+	{
+		//Get another number from sam until we get one that is smaller than the totient
+		e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
+	}
+
+	if(find_gcd(&e,totient) == BigUint::parse_bytes("1".as_bytes(),10).unwrap())
+	{
+		return e;
 	}
 	
-	return generate_e(totient,bit_size);
+	return generate_e(totient);
 }
-
-fn generate_large_prime_number(bit_size: usize) -> num::bigint::BigUint{
-    let mut bignum: num::bigint::BigUint;
-    let mut randyjackson = rand::thread_rng();
-    bignum = randyjackson.gen_biguint(bit_size);
-	
-	if check_primality(&bignum) {
-		return bignum;
-	} else {
-		return generate_large_prime_number(bit_size);
-	}
-}
-
 
 /**
  * This function writes the bytes of a BigUint to a file.
@@ -86,60 +108,45 @@ fn write_bnum(bignum: num::bigint::BigUint){
     
 }
 
-
-/*
- * This function will test for 2 and 3 divisability before sending it to 
- * 	the aks function 
+/**
+ *
  */
-fn check_primality(bignum: &num::bigint::BigUint) -> bool {
-
-	let mut scalar_one: num::bigint::BigUint;
-	let mut scalar_two: num::bigint::BigUint;
+fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::BigUint {
 	
-	scalar_one = BigUint::parse_bytes("3".as_bytes(),10).unwrap();
-	scalar_two = BigUint::parse_bytes("2".as_bytes(),10).unwrap();
-	
-	//println!("{}",scalar_one);
-	//println!("{}",scalar_two);
-	
-	println!("big num {}", bignum);
-	
-	//if its a small prime dont bother
-	if * bignum <= scalar_one {
-		scalar_one = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
-		if * bignum > scalar_one {
-			return true;
-		}
-		scalar_one = BigUint::parse_bytes("3".as_bytes(),10).unwrap();
-	} else { 	
-	
-		//divisable by two or three...come on now
-		
-		let mut temp = bignum;
-		
-		let mut result_one = temp % scalar_two;
-		let mut result_two = temp % scalar_one;
-		
-		//println!("{}",result_one);
-		//println!("{}",result_two);
-		
-		if (result_one == BigUint::parse_bytes("0".as_bytes(),10).unwrap() || ( result_two == BigUint::parse_bytes("0".as_bytes(),10).unwrap())) {
-			return false;
-		}
+	if *m == BigUint::parse_bytes("0".as_bytes(),10).unwrap(){
+		return (*n).clone();
+	} else {
+		let a = (*m).clone();
+		let b = (*n).clone() % (*m).clone();
+		return find_gcd(&a, &b)
 	}
-	
-	//This is where we would start using the aks system
-	
-	return aks_primality_test(bignum);
 }
 
-/**
- *   This is the aks primality testing area
- */
-fn aks_primality_test(bignum: &num::bigint::BigUint) -> bool{
-	return true;
-} 
+fn extended_euclids_function(n: &mut &num::bigint::BigUint, m: &mut &num::bigint::BigUint, gcd: &mut &num::bigint::BigUint, i: &mut &num::bigint::BigUint, j: &mut &num::bigint::BigUint)
+{
+	if((*m) == &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap())
+	{
+		let mut gcd = &mut (*n).clone();
+		let mut i = &mut BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+		let mut j = &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+	
+		//debugging area
+		println!("About to pop out of recursion");
+		println!("Value of gcd = {}", gcd);
+		println!("Value of i = {}", i);
+		println!("Value of j = {}", j);
 
+	} else {
+		let mut iprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+		let mut jprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+		let mut gcdprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
+		let mut modval = ((*n).clone() % (*m).clone());
+		extended_euclids_function(m, &mut &modval , &mut &gcdprime, &mut &iprime, &mut &jprime);
+		let mut gcd = &mut gcdprime;
+		let mut i = &mut jprime;
+		let mut j = &mut (iprime - ((*i).clone() * ((*n).clone() / (*m).clone()))); 
+	}
+}
 /**
  *  This function returns the euler's totient value based on given numbers p, q and n
  */
