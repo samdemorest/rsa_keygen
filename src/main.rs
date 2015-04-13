@@ -1,5 +1,6 @@
 #![feature(core)]
 #![feature(convert)]
+#![feature(collections)]
 extern crate num;
 extern crate rustc_serialize;
 extern crate rand;
@@ -8,6 +9,7 @@ use num::traits::*;
 use num::integer::Integer;
 use num::bigint::{BigUint, ToBigUint, RandBigInt};
 use std::io::prelude::*;
+use std::collections::BitVec;
 use std::fs::File;
 use std::path::Path;
 use std::error::Error;
@@ -16,6 +18,11 @@ use rand::Rng;
 use core::ops::*;
 use std::{env, fmt, usize};
 use num::bigint::BigInt::*;
+
+/**
+ * Global variable definitions
+ */
+
 
 /*
  * Main driver for the program. Lots of experimentation going on here on how to do various tasks
@@ -38,11 +45,12 @@ fn gen_large_prime(bit_size: usize){
     let mut bignum: BigUint;
     let mut rnjesus = rand::OsRng::new().unwrap();
     let mut is_prime: bool = false;
+    let ONE: BigUint = BigUint::one();
     //let max_exp: u64 = 
     //    bit_size.add(1.to_usize().unwrap()).to_f64().unwrap().log2().ceil().to_u64().unwrap();
     
     while !is_prime{
-       bignum = rnjesus.gen_biguint(bit_size);
+       bignum = rnjesus.gen_biguint(bit_size).bitor(&ONE.clone().shl(bit_size - 1));
        if bignum.clone().is_even(){
            println!("Even number discarded...");
            continue;
@@ -53,7 +61,7 @@ fn gen_large_prime(bit_size: usize){
         *   is an acceptable threshold of accuracy.
         */
        println!("Getting value for is_prime via Miller-Rabin");
-       is_prime = miller_rabin(bignum.clone(), 2);
+       is_prime = miller_rabin(bignum.clone(), 5);
        if is_prime{
            println!("Prime discovered: {}", bignum.clone());
        }
@@ -65,11 +73,15 @@ fn gen_large_prime(bit_size: usize){
  * The Miller-Rabin Primality Test implemented. Seems to return prime numbers.
  */
 fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
+    let ONE = BigUint::one();
+    let ZERO = BigUint::zero();
+    let TWO = BigUint::from_usize(2).unwrap();
     println!("Entering miller-rabin");
     let mut rnjesus = rand::OsRng::new().unwrap();
     let k: usize = num_runs;
-    let mut a: BigUint;
+    let mut a: BigUint = ZERO.clone(); 
     let mut x: BigUint;
+    let mut rval: usize = 0;
     println!("Getting d and s.");
     let (d,s) = get_ds(bignum.clone());
     for i in 1..k{
@@ -83,20 +95,23 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
             return false;
         }
         a = rnjesus.gen_biguint_range(&BigUint::from_usize(2).unwrap(), 
-                                      &bignum.clone().sub(BigUint::from_usize(2).unwrap()));
+                                      &bignum.clone().sub(&TWO));
         println!("found a: {}", a);
         x = mod_exp(a.clone(), d.clone(), bignum.clone());
-        println!("Finished mod_exp");
-        if x.ne(&BigUint::one()) && x.ne(&bignum.clone().sub(BigUint::one())){
+        println!("\n\nFinished mod_exp");
+        if x.ne(&ONE) && x.ne(&bignum.clone().sub(&ONE)){
             for r in 1..s{
                 println!("r = {}, s = {}", r, s);
-                x = mod_exp(x, BigUint::from_usize(2).unwrap(), bignum.clone());
+                x = mod_exp(x, TWO.clone(), bignum.clone());
                 if x.eq(&BigUint::one()){
+                    println!("Rejected in for r = 1..s loop");
                     return false
-                } else if x.eq(&bignum.clone().sub(BigUint::one())){
-                    a = BigUint::zero();
+                } else if x.eq(&bignum.clone().sub(&ONE)){
+                    a = ZERO.clone();
+                    println!("x = n-1. Loop break. a = 0.");
                     break;
                 }
+                rval = r;
             } // end for r in 1..s
             if a.ne(&BigUint::zero()){
                 return false
@@ -107,16 +122,34 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
 }
 
 /**
+ * Fast modulo exponentiation as described in algorithm 11.4 of Neapolitan
+ * modulo cannot be 1 or we will have problems.
+ * TODO: Make this not have problems.
+ */
+fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+    let b: BitVec = BitVec::from_bytes(&power.to_bytes_le());
+    let mut a: BigUint = BigUint::one();
+    for i in 0..b.len(){
+        a = a.clone().mul(&a).mod_floor(&modulo);
+        if b[i]{
+            a = a.mul(&base).mod_floor(&modulo);
+        }
+    }
+    return a;
+}
+
+/**
  * Gets the result of [base_modulo]^power
  * TODO: This needs to be optimized if this is going to be a practical key generator.
  */
-fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+    let ONE = BigUint::one();
     let mut retval: BigUint = power.clone();
-    let mut c: BigUint = BigUint::one();
-    let mut i: BigUint = BigUint::one();
+    let mut c: BigUint = ONE.clone(); 
+    let mut i: BigUint = ONE.clone();
     while i.le(&power){
         c = (base.clone().mul(c)).mod_floor(&modulo);
-        i = i.add(BigUint::one());
+        i = i.add(&ONE);
     }
 
     return c;
@@ -140,15 +173,22 @@ fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
  * Get d and s for use in calculation in Miller-Rabin test
  */
 fn get_ds(bignum: BigUint) -> (BigUint, usize){
+    let ONE = BigUint::one();
+    let ZERO = BigUint::zero();
     println!("In get_ds");
-    let mut test = bignum.clone().sub(BigUint::one());
+    let mut test = bignum.clone().sub(&ONE);
     let mut s: usize = 0;
     /*
      * TODO: Sometimes this will hit zero when n-1 is even. Gotta figure this one out.
      */
-    while test.is_even(){
+    /*while test.is_even(){
         println!("In loop determining if 'test' is even: {}", test);
         test = test.div(BigUint::from_usize(2).unwrap());
+        s += 1;
+    }*/
+    while test.clone().bitand(&ONE) == ZERO{
+        println!("Test: {}", &test);
+        test = test.shr(1);
         s += 1;
     }
     return (test.clone(), s)
@@ -218,21 +258,6 @@ fn check_primality(bignum: BigUint, max_exp: u64) -> bool {
     return false;
 }
 
-/*
- * This function is used in the AKS Primality Test, in which the first part
- * of the sieve determines whether or not our number being tested is a power
- * of another number, in which case our number will not be prime.
- *
- * ACTUALLY, this is unnecessary, as we can do what this functoin does and more in the prime
- * testing function.
- */
-fn is_perfect_power(n: BigUint, k: BigUint, j: usize) -> bool {
-    if n == num::pow(k, j){
-        return true;
-    }
-
-    return false;
-}
 
 #[cfg(test)]
 mod tests {
