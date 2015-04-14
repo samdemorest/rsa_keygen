@@ -102,7 +102,7 @@ fn write_bnum(bignum: num::bigint::BigUint){
 }
 
 /**
- *
+ *  Euclidian method for finding the greatest common denominator
  */
 fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::BigUint {
 	
@@ -115,32 +115,9 @@ fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::
 	}
 }
 
-// fn extended_euclids_function(n: &mut &num::bigint::BigUint, m: &mut &num::bigint::BigUint, gcd: &mut &num::bigint::BigUint, i: &mut &num::bigint::BigUint, j: &mut &num::bigint::BigUint)
-// {
-// 	if((*m) == &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap())
-// 	{
-// 		let mut gcd = &mut (*n).clone();
-// 		let mut i = &mut BigUint::parse_bytes("1".as_bytes(),10).unwrap();
-// 		let mut j = &mut BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-	
-// 		//debugging area
-// 		println!("About to pop out of recursion");
-// 		println!("Value of gcd = {}", gcd);
-// 		println!("Value of i = {}", i);
-// 		println!("Value of j = {}", j);
-
-// 	} else {
-// 		let mut iprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-// 		let mut jprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-// 		let mut gcdprime = BigUint::parse_bytes("0".as_bytes(),10).unwrap();
-// 		let mut modval = ((*n).clone() % (*m).clone());
-// 		extended_euclids_function(m, &mut &modval , &mut &gcdprime, &mut &iprime, &mut &jprime);
-// 		let mut gcd = &mut gcdprime;
-// 		let mut i = &mut jprime;
-// 		let mut j = &mut (iprime - ((*i).clone() * ((*n).clone() / (*m).clone()))); 
-// 	}
-// }
-
+/** 
+* 	
+*/
 fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::BigInt {
 	let mut t = BigInt::parse_bytes("0".as_bytes(),10).unwrap();
 	let mut r = (*n).clone();
