@@ -1,0 +1,89 @@
+\documentclass[12pt,journal,compsoc]{IEEEtran}
+\ifCLASSOPTIONcompsoc
+\else
+\fi
+\ifCLASSINFOpdf
+\else
+\fi
+\providecommand{\PSforPDF}[1]{#1}
+
+
+\newcommand\MYhyperrefoptions{bookmarks=true,bookmarksnumbered=true,
+pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
+colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
+urlcolor={black},
+pdftitle={RSA Cryptosystem Generation of Public and Private Keys in Rust},
+pdfsubject={Typesetting},%<!CHANGE!
+pdfauthor={Pearson/Demorest},
+pdfkeywords={RSA, rust, key generation, large prime numbers}}%<^!CHANGE!
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{RSA Cryptosystem Generation of Public and Private Keys in Rust}
+\author{~Dr.~Elise~de Doncker,~Jason~Pearson,~Sam~Demorest% <-this % stops a space
+\thanks{Dr. Elise de Doncker}}
+
+% The paper headers
+\markboth{}%
+{Shell \MakeLowercase{\textit{et al.}}: RSA Cryptosystem Generation of Public and Private Keys in Rust}
+
+
+
+\IEEEcompsoctitleabstractindextext{%
+\begin{abstract}
+	The goal of our project was to develop two programs. The first program would be for determining large prime numbers and the second program for using the first application to create public and private key pairs and using these pairs to encrypt/decrypt a message.
+\end{abstract}
+\begin{IEEEkeywords}
+RSA, rust, key generation, large prime numbers
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+\IEEEdisplaynotcompsoctitleabstractindextext
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+\IEEEPARstart{T}{his} project under the supervision of Dr. Elise de Doncker is to implement the numerous algorithms needed to create a public and private RSA key pair set. 
+
+
+\section{Research}
+At the start of our project we first researched what an RSA key is and how to generate them and discovered it only takes a few steps. The first step is to create two prime numbers. The larger the prime number the better the encryption. Then with these two prime numbers we would be able to create a public and private key. 
+\newline \indent We found two algorithms for finding if a number is prime or not. The first is the AKS Primality Test. This primality test is the best deterministic primality test known in terms of time complexity. This being said it is still very slow when compared to non deterministic primality testing algorithms. So we also looked at the Miller Rabin probabilistic primality tests to also test numbers which runs much faster than the AKS primality test.
+\newline \indent Once we had found the algorithms needed to do all the actions we had to select a programming language to use and we chose rust. The main reason for choosing rust is because it is low level and has great memory management built into the language, this would allow our program to go faster which is a must because the time complexity of algorithms is quite high.
+
+\section{Design}
+
+
+\section{Implementation}
+
+\section{Testing}
+
+\section{Result Analysis}
+
+\section{Goals Reached}
+
+\section{User Guide}
+
+\section{Conclusion}
+
+
+\appendices
+
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:kopka}
+H.~Kopka and P.~W. Daly, \emph{A Guide to {\LaTeX}}, 3rd~ed.\hskip 1em plus
+  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\end{thebibliography}
+
+\end{document}
+
+
