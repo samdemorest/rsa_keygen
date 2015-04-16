@@ -5,6 +5,6 @@ version = "0.0.1"
 authors = ["Jason Pearson <jjpearson8611@gmail.com>"]
 
 [dependencies]
-num = "0.1.15"
-rustc-serialize = "0.3.1"
+num = "*"
+rustc-serialize = "*"
 rand = "0.1.4"

@@ -10,11 +10,16 @@ use std::old_io as io;
 use std::old_io::File;
 use rustc_serialize::base64::*;
 use std::num::FromPrimitive;
+use num::bigint::ToBigInt;
+
+mod prime;
 
 use num::bigint::BigInt::*;
 use std::{env};
 
 fn main() {
+    
+
     let mut bit_size: usize;
     let args: Vec<_> = env::args().collect();
     if args.len() > 1 {
@@ -33,8 +38,14 @@ fn main() {
     }
     write_bnum(bignum);
     println!("Option unwrap: {}", BigUint::from_u64(420).unwrap());
-	let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
-	let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
+
+    //Values used for testing
+	//let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
+	//let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
+
+
+	let mut p = prime::gen_large_prime(bit_size);
+	let mut q = prime::gen_large_prime(bit_size);
 	
 
 	println!("Value of p = {}", p);
@@ -48,33 +59,34 @@ fn main() {
 
 	println!("Value of totient = {}", totient);
 
-	let mut e = generate_e((&totient));
+	let mut e = generate_e((&totient), bit_size);
 
 	println!("Value of e = {}", e);
 
-	let mut d = find_modular_inverse((&e),(&totient));
+	//Testing Values
+	//let mut temp_one = BigInt::parse_bytes("17".as_bytes(),10).unwrap();
+	//let mut temp_two = BigInt::parse_bytes("3120".as_bytes(),10).unwrap();
+	//let mut d = inverse(&temp_one, &temp_two);
 
-	let mut tempOne = BigInt::parse_bytes("17".as_bytes(),10).unwrap();
-	let mut tempTwo = BigInt::parse_bytes("3120".as_bytes(),10).unwrap();
-
-	let mut d = inverse(&tempOne, &tempTwo);
+	let mut d = inverse((&(e.to_bigint().unwrap())), ((&totient.to_bigint().unwrap())));
 
 	println!("Value of d = {}", d);
 }
 
-fn find_modular_inverse(e: &num::bigint::BigUint, totient: &num::bigint::BigUint) -> num::bigint::BigUint {
-	return ((BigUint::parse_bytes("1".as_bytes(),10).unwrap() / e) % totient);
-}
+fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::BigUint {
+	
+	//This would get a number from sam's class to get the e value that is random
+	// Testing Statement
+	//let mut e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
+	let mut e = prime::gen_large_prime(bit_size);
 
-fn generate_e(totient: &num::bigint::BigUint) -> num::bigint::BigUint {
-	
-	//This would get a numbr from sam's class to get the e value that is random
-	let mut e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
-	
 	while e > (*totient)
 	{
 		//Get another number from sam until we get one that is smaller than the totient
-		e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
+		
+		//Testing Value
+		//e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
+		let mut e = prime::gen_large_prime(bit_size);
 	}
 
 	if(find_gcd(&e,totient) == BigUint::parse_bytes("1".as_bytes(),10).unwrap())
@@ -82,7 +94,7 @@ fn generate_e(totient: &num::bigint::BigUint) -> num::bigint::BigUint {
 		return e;
 	}
 	
-	return generate_e(totient);
+	return generate_e(totient, bit_size);
 }
 
 /**
@@ -128,12 +140,12 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
 	{
 		let mut quotient = r.clone() / newr.clone();
 
-		let mut tempOne = t.clone() - (quotient.clone() * newt.clone());
-		let mut tempTwo = r.clone() - (quotient.clone() * newr.clone());
+		let mut temp_one = t.clone() - (quotient.clone() * newt.clone());
+		let mut temp_two = r.clone() - (quotient.clone() * newr.clone());
 		t = newt;
-		newt = tempOne;
+		newt = temp_one;
 		r = newr;
-		newr = tempTwo;
+		newr = temp_two;
 
 		//if r > BigInt::parse_bytes("1".as_bytes(),10).unwrap() 
 		//{
@@ -141,8 +153,8 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
 		//}
 		if t < BigInt::parse_bytes("0".as_bytes(),10).unwrap() 
 		{
-			let mut tempThree = t + (*n).clone();
-			t = tempThree;
+			let mut temp_three = t + (*n).clone();
+			t = temp_three;
 		}	
 	}
 	return t;
