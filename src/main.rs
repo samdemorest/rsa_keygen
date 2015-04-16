@@ -71,6 +71,20 @@ fn main() {
 	let mut d = inverse((&(e.to_bigint().unwrap())), ((&totient.to_bigint().unwrap())));
 
 	println!("Value of d = {}", d);
+
+	let mut reader = io::stdin();
+
+	println!("Please Insert Word To Encrypt");
+	let a = reader.read_line().ok().expect("Failed to Read Line");
+
+
+	println!("value of a = {}", a);
+
+	let mut encrypted = encrypt(a, (&totient), (&e));
+	let mut decrypted = decrypt(encrypted.clone(), (&d), (&e));
+	println!("Encryption Time = {}", encrypted);
+	println!("Decryption Time = {}", decrypted);
+
 }
 
 fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::BigUint {
@@ -113,6 +127,18 @@ fn write_bnum(bignum: num::bigint::BigUint){
     
 }
 
+fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::BigUint) -> String {
+
+
+	return String::from_str("this should be the encrypted part");
+}
+
+fn decrypt(decrypt: String, d: &num::bigint::BigUint, e: &num::bigint::BigUint) -> String {
+
+
+	return String::from_str("this should be the decrypted part");
+}
+
 /**
  *  Euclidian method for finding the greatest common denominator
  */
@@ -128,9 +154,9 @@ fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::
 }
 
 /** 
-* 	
+* 	used for finding d in the RSA algorithm
 */
-fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::BigInt {
+fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::BigUint {
 	let mut t = BigInt::parse_bytes("0".as_bytes(),10).unwrap();
 	let mut r = (*n).clone();
 	let mut newt = BigInt::parse_bytes("1".as_bytes(),10).unwrap();
@@ -157,7 +183,7 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
 			t = temp_three;
 		}	
 	}
-	return t;
+	return t.to_biguint().unwrap();
 }
 
 

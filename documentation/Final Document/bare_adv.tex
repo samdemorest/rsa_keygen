@@ -7,6 +7,8 @@
 \fi
 \providecommand{\PSforPDF}[1]{#1}
 
+\usepackage{listings}
+
 
 \newcommand\MYhyperrefoptions{bookmarks=true,bookmarksnumbered=true,
 pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
@@ -19,6 +21,7 @@ pdfkeywords={RSA, rust, key generation, large prime numbers}}%<^!CHANGE!
 
 
 \begin{document}
+\lstset{language=bash}
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
@@ -66,7 +69,7 @@ At the start of our project we first researched what an RSA key is and how to ge
 
 \section{Implementation}
 The prime generator will use a two different primality tests. To generate relatively small (but still large) prime numbers, we will use the AKS Primality Test, which is the best performing deterministic primality test currently known. This is more to demonstrate an understanding of the principles behind the AKS test rather than to implement it for any serious purpose in our key generator. The AKS algorithm is still too slow for extremely large primes, so in the actual key generation process, we will use a series of Miller Rabin probabilistic primality tests to generate a number that can be determined to be prime within a probability threshold. We will be using various optimizations to the probability tests, such as not considering even numbers, in order to increase the speed at which we are able to determine whether or not a number is prime.  
-\newline \indent The key generator will call the prime generation method of the first program and that will take care of all the work for prime number generation. After it gets the prime numbers p and q we use those to compute n which is simply p times q. Next we need to determine φ(n) which is simply $n - (p + q -1)$. After these are all computed we create a good e value and compute d. The e value is simply a number 1 $<$ e $<φ(n)$. Then d = e-1(mod(φ(n)), which is the private key part of the encryption.
+\newline \indent The key generator will call the prime generation method of the first program and that will take care of all the work for prime number generation. After it gets the prime numbers p and q we use those to compute n which is simply p times q. Next we need to determine φ(n) which is simply $n - (p + q -1)$. After these are all computed we create a good e value and compute d. The e value is simply a number \\1 $<$ e $<φ(n)$. Then d = e$^{-1}$(mod(φ(n)), which is the private key part of the encryption.
 
 
 \section{Testing}
@@ -78,8 +81,18 @@ To test our program we took an example and tested that our input and output matc
 \section{Result Analysis}
 
 \section{Goals Reached}
+Our initial goals were to create a primality testing section and to create public and private keys. We were successful in testing for prime numbers with a deterministic method and a non-deterministic method. Another goal of ours was to encrypt and decrypt an input string and we were also successful in this goal. \\ \indent One of our stretch goals was not reached. We were hoping to be able to use our program with other programs that use public and private key pairs such as ssh. We determined this to be out of scope because of the strict standards set up by the IEEE. 
 
 \section{User Guide}
+To run this program it is very simple. First you will need to build the program so cd to the directory and run 
+\begin{lstlisting}[frame=single]
+cargo build
+\end{lstlisting} 
+This compiles the program then to run it we simply do 
+\begin{lstlisting}[frame=single]
+cargo run X 
+\end{lstlisting}
+Where X is the bit size. The larger the bit size the longer the program will run. After you run the application it will ask for a string you would like encoded then decoded.
 
 \section{Conclusion}
 
