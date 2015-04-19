@@ -53,7 +53,7 @@ pub fn gen_large_prime(bit_size: usize) -> num::bigint::BigUint{
     while !is_prime{
        bignum = rnjesus.gen_biguint(bit_size).bitor(&ONE.clone().shl(bit_size - 1));
        if bignum.clone().is_even(){
-           println!("Even number discarded...");
+           //println!("Even number discarded...");
            continue;
        } 
        /*
@@ -61,10 +61,10 @@ pub fn gen_large_prime(bit_size: usize) -> num::bigint::BigUint{
         *   possibility that the test gives an inaccurate result is 25%. 0.25^5 = 0.0009765, which
         *   is an acceptable threshold of accuracy.
         */
-       println!("Getting value for is_prime via Miller-Rabin");
+       //println!("Getting value for is_prime via Miller-Rabin");
        is_prime = miller_rabin(bignum.clone(), 5);
        if is_prime{
-           println!("Prime discovered: {}", bignum.clone());
+           //println!("Prime discovered: {}", bignum.clone());
        }
     }
 
@@ -79,16 +79,16 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
     let ONE = BigUint::one();
     let ZERO = BigUint::zero();
     let TWO = BigUint::from_usize(2).unwrap();
-    println!("Entering miller-rabin");
+    //println!("Entering miller-rabin");
     let mut rnjesus = rand::OsRng::new().unwrap();
     let k: usize = num_runs;
     let mut a: BigUint = ZERO.clone(); 
     let mut x: BigUint;
     let mut rval: usize = 0;
-    println!("Getting d and s.");
+    //println!("Getting d and s.");
     let (d,s) = get_ds(bignum.clone());
     for i in 1..k{
-        println!("i = {} in 1..k", i);
+        //println!("i = {} in 1..k", i);
         /* TODO: Got a panic coming from the line below. bignum must be > 4. This shouldn't be a
          * problem, but to keep the program from barfing all over everything, we really should
          * check the value of bignum before we send it down here.
@@ -99,19 +99,19 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
         }
         a = rnjesus.gen_biguint_range(&BigUint::from_usize(2).unwrap(), 
                                       &bignum.clone().sub(&TWO));
-        println!("found a: {}", a);
+        //println!("found a: {}", a);
         x = mod_exp(a.clone(), d.clone(), bignum.clone());
-        println!("\n\nFinished mod_exp");
+        //println!("\n\nFinished mod_exp");
         if x.ne(&ONE) && x.ne(&bignum.clone().sub(&ONE)){
             for r in 1..s{
-                println!("r = {}, s = {}", r, s);
+                //println!("r = {}, s = {}", r, s);
                 x = mod_exp(x, TWO.clone(), bignum.clone());
                 if x.eq(&BigUint::one()){
-                    println!("Rejected in for r = 1..s loop");
+                    //println!("Rejected in for r = 1..s loop");
                     return false
                 } else if x.eq(&bignum.clone().sub(&ONE)){
                     a = ZERO.clone();
-                    println!("x = n-1. Loop break. a = 0.");
+                    //println!("x = n-1. Loop break. a = 0.");
                     break;
                 }
                 rval = r;
@@ -178,7 +178,7 @@ fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
 fn get_ds(bignum: BigUint) -> (BigUint, usize){
     let ONE = BigUint::one();
     let ZERO = BigUint::zero();
-    println!("In get_ds");
+    //println!("In get_ds");
     let mut test = bignum.clone().sub(&ONE);
     let mut s: usize = 0;
     /*
@@ -190,7 +190,7 @@ fn get_ds(bignum: BigUint) -> (BigUint, usize){
         s += 1;
     }*/
     while test.clone().bitand(&ONE) == ZERO{
-        println!("Test: {}", &test);
+        //println!("Test: {}", &test);
         test = test.shr(1);
         s += 1;
     }

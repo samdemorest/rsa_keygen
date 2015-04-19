@@ -27,18 +27,7 @@ fn main() {
     } else {
         panic!("Needs an argument for key bit size!");
     }
-    let mut optional: num::bigint::BigUint;
-    let mut bignum: num::bigint::BigUint;
-    let mut rnjesus = rand::thread_rng();
-    bignum = BigUint::parse_bytes("61".as_bytes(),10).unwrap(); //generate_large_prime_number(bit_size);
-    let mut big_vec: Vec<num::bigint::BigUint> = Vec::new();
-    println!("Big number incoming: {}", bignum);
-    for _ in 0..100 {
-        big_vec.push(rnjesus.gen_biguint(bit_size));
-    }
-    write_bnum(bignum);
-    println!("Option unwrap: {}", BigUint::from_u64(420).unwrap());
-
+    
     //Values used for testing
 	//let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
 	//let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
@@ -74,15 +63,17 @@ fn main() {
 
 	let mut reader = io::stdin();
 
-	println!("Please Insert Word To Encrypt");
+	println!("Please Insert Letter To Encrypt");
 	let a = reader.read_line().ok().expect("Failed to Read Line");
 
 
-	println!("value of a = {}", a);
+	println!("You sent in {}", a);
 
-	let mut encrypted = encrypt(a, (&totient), (&e));
-	let mut decrypted = decrypt(encrypted.clone(), (&d), (&e));
+	let mut encrypted = encrypt(a, (&totient), (&e), (&n));
 	println!("Encryption Time = {}", encrypted);
+
+
+	let mut decrypted = decrypt(encrypted.clone(), (&d), (&n));
 	println!("Decryption Time = {}", decrypted);
 
 }
@@ -127,16 +118,329 @@ fn write_bnum(bignum: num::bigint::BigUint){
     
 }
 
-fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::BigUint) -> String {
+fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
+
+	let mut tester = String::new();
 
 
-	return String::from_str("this should be the encrypted part");
+	for c in encrypt.chars() {
+		//println!("character {}", get_ascii_val(c));
+
+		if(get_ascii_val(c) != -1)
+		{
+			tester = tester + (get_ascii_val(c).to_string().as_slice());
+		}
+	}
+
+	//println!("Test {}", tester);
+
+	let mut input_num = BigUint::parse_bytes(tester.as_bytes(),10).unwrap();
+
+	//println!("Now its a number {}", input_num);
+
+	let mut number = input_num.clone();
+
+	//input_num = input_num.parse().unwrap();
+
+	if((*n) > input_num)
+	{
+		//println!("It is big enough {}", input_num);
+
+		
+		let mut i = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+
+		while  i < (*e) 
+		{
+			//println!("Counter i {} out of {}", i, (*e));
+			//println!("Number before mod {}", number);
+			number = (input_num.clone()) * number;
+			i = i + BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+		}
+
+		//println!("Number before mod {}", (number.clone()));
+		//println!("Number After mod {}", (number.clone() % (*n).clone()));
+	}
+
+
+	return ((number.clone() % (*n).clone())).to_string();
 }
 
-fn decrypt(decrypt: String, d: &num::bigint::BigUint, e: &num::bigint::BigUint) -> String {
+fn decrypt(decrypt: String, d: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
+	//println!("Test {}", tester);
+
+	let mut input_num = BigUint::parse_bytes(decrypt.as_bytes(),10).unwrap();
+
+	//println!("Now its a number {}", input_num);
+
+	let mut number = input_num.clone();
+
+	//input_num = input_num.parse().unwrap();
+	
+	let mut i = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+
+	while  i < (*d) 
+	{
+		//println!("Counter i {} out of {}", i, (*e));
+		//println!("Number before mod {}", number);
+		number = (input_num.clone()) * number;
+		i = i + BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+	}
+
+	//println!("Number before mod {}", (number.clone()));
+	//println!("Number After mod {}", (number.clone() % (*totient).clone()));
+
+	number = (number.clone() % (*n).clone());
 
 
-	return String::from_str("this should be the decrypted part");
+	let mut tester = String::new();
+
+	let mut temp = 0;
+	let mut bite = String::new();
+
+	for c in number.to_string().chars() {
+
+		//chew
+		if(temp == 0)
+		{
+			//println!("First Bite Char = {}", c);
+			bite = c.to_string();
+			temp = 1;
+
+		} else {
+			bite = bite + c.to_string().as_slice();
+			temp = 0;
+
+			//println!("Second Bite Char = {}", c);
+			//println!("Bite String = {}", bite);
+
+			tester = tester + val_to_ascii(BigUint::parse_bytes(bite.as_bytes(), 10).unwrap()).to_string().as_slice();
+
+			//println!("Tester = {}", tester);
+		}
+	}
+
+	return tester;
+}
+
+fn get_ascii_val(character: char) -> int {
+	if (character == 'a' || character == 'A')
+	{
+		return 65;
+	}
+	if (character == 'b' || character == 'B')
+	{
+		return 66;	
+	}
+	if (character == 'c' || character == 'C')
+	{
+		return 67;
+	}
+	if (character == 'd' || character == 'D')
+	{
+		return 68;
+	}
+	if (character == 'e' || character == 'E')
+	{
+		return 69;
+	}
+	if (character == 'f' || character == 'F')
+	{
+		return 70;
+	}
+	if (character == 'g' || character == 'G')
+	{
+		return 71;
+	}
+	if (character == 'h' || character == 'H')
+	{
+		return 72;
+	}
+	if (character == 'i' || character == 'I')
+	{
+		return 73;
+	}
+	if (character == 'j' || character == 'J')
+	{
+		return 74;
+	}
+	if (character == 'k' || character == 'K')
+	{
+		return 75;
+	}
+	if (character == 'l' || character == 'L')
+	{
+		return 76;
+	}
+	if (character == 'm' || character == 'M')
+	{
+		return 77;
+	}
+	if (character == 'n' || character == 'N')
+	{
+		return 78;
+	}
+	if (character == 'o' || character == 'O')
+	{
+		return 79;
+	}
+	if (character == 'p' || character == 'P')
+	{
+		return 80;
+	}
+	if (character == 'q' || character == 'Q')
+	{
+		return 81;
+	}
+	if (character == 'r' || character == 'R')
+	{
+		return 82;
+	}
+	if (character == 's' || character == 'S')
+	{
+		return 83;
+	}
+	if (character == 't' || character == 'T')
+	{
+		return 84;
+	}
+	if (character == 'u' || character == 'U')
+	{
+		return 85;
+	}
+	if (character == 'v' || character == 'V')
+	{
+		return 86;
+	}
+	if (character == 'w' || character == 'W')
+	{
+		return 87;
+	}
+	if (character == 'x' || character == 'X')
+	{
+		return 88;
+	}
+	if (character == 'y' || character == 'Y')
+	{
+		return 89;
+	}
+	if (character == 'z' || character == 'Z')
+	{
+		return 90;
+	}
+
+	return -1;
+
+}
+
+fn val_to_ascii(integer: num::bigint::BigUint) -> char {
+	
+	if (integer == BigUint::parse_bytes("65".as_bytes(),10).unwrap())
+	{
+		return 'A';
+	}
+	if (integer == BigUint::parse_bytes("66".as_bytes(),10).unwrap())
+	{
+		return 'B';	
+	}
+	if (integer == BigUint::parse_bytes("67".as_bytes(),10).unwrap())
+	{
+		return 'C';
+	}
+	if (integer == BigUint::parse_bytes("68".as_bytes(),10).unwrap())
+	{
+		return 'D';
+	}
+	if (integer == BigUint::parse_bytes("69".as_bytes(),10).unwrap())
+	{
+		return 'E';
+	}
+	if (integer == BigUint::parse_bytes("70".as_bytes(),10).unwrap())
+	{
+		return 'F';
+	}
+	if (integer == BigUint::parse_bytes("71".as_bytes(),10).unwrap())
+	{
+		return 'G';
+	}
+	if (integer == BigUint::parse_bytes("72".as_bytes(),10).unwrap())
+	{
+		return 'H';
+	}
+	if (integer == BigUint::parse_bytes("73".as_bytes(),10).unwrap())
+	{
+		return 'I';
+	}
+	if (integer == BigUint::parse_bytes("74".as_bytes(),10).unwrap())
+	{
+		return 'J';
+	}
+	if (integer == BigUint::parse_bytes("75".as_bytes(),10).unwrap())
+	{
+		return 'K';
+	}
+	if (integer == BigUint::parse_bytes("76".as_bytes(),10).unwrap())
+	{
+		return 'L';
+	}
+	if (integer == BigUint::parse_bytes("77".as_bytes(),10).unwrap())
+	{
+		return 'M';
+	}
+	if (integer == BigUint::parse_bytes("78".as_bytes(),10).unwrap())
+	{
+		return 'N';
+	}
+	if (integer == BigUint::parse_bytes("79".as_bytes(),10).unwrap())
+	{
+		return 'O';
+	}
+	if (integer == BigUint::parse_bytes("80".as_bytes(),10).unwrap())
+	{
+		return 'P';
+	}
+	if (integer == BigUint::parse_bytes("81".as_bytes(),10).unwrap())
+	{
+		return 'Q';
+	}
+	if (integer == BigUint::parse_bytes("82".as_bytes(),10).unwrap())
+	{
+		return 'R';
+	}
+	if (integer == BigUint::parse_bytes("83".as_bytes(),10).unwrap())
+	{
+		return 'S';
+	}
+	if (integer == BigUint::parse_bytes("84".as_bytes(),10).unwrap())
+	{
+		return 'T';
+	}
+	if (integer == BigUint::parse_bytes("85".as_bytes(),10).unwrap())
+	{
+		return 'U';
+	}
+	if (integer == BigUint::parse_bytes("86".as_bytes(),10).unwrap())
+	{
+		return 'V';
+	}
+	if (integer == BigUint::parse_bytes("87".as_bytes(),10).unwrap())
+	{
+		return 'W';
+	}
+	if (integer == BigUint::parse_bytes("88".as_bytes(),10).unwrap())
+	{
+		return 'X';
+	}
+	if (integer == BigUint::parse_bytes("89".as_bytes(),10).unwrap())
+	{
+		return 'Y';
+	}
+	if (integer == BigUint::parse_bytes("90".as_bytes(),10).unwrap())
+	{
+		return 'Z';
+	}
+
+	return ' ';
+
 }
 
 /**
