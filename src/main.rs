@@ -102,22 +102,6 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 	return generate_e(totient, bit_size);
 }
 
-/**
- * This function writes the bytes of a BigUint to a file.
- */
-fn write_bnum(bignum: num::bigint::BigUint){
-    let mut file = File::create(&Path::new("outfile.txt"));
-    let testnum = [65, 65, 65, 65];
-    let bignum_bytes: Vec<u8> = bignum.to_bytes_le();
-    println!("{}", testnum.to_base64(STANDARD));
-    file.write_all(b"ssh-rsa ");
-    let bigslice = bignum_bytes.as_slice();
-    println!("{}",bigslice.to_base64(STANDARD));
-    let formatted = format!("{}", bigslice.to_base64(STANDARD));
-    file.write_all(formatted.as_bytes());
-    
-}
-
 fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
 
 	let mut tester = String::new();
@@ -144,53 +128,24 @@ fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::Big
 
 	if((*n) > input_num)
 	{
-		//println!("It is big enough {}", input_num);
 
-		
-		let mut i = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+		println!("Number before mod {}", (number.clone()));
+		return (prime::mod_exp(number, (*e).clone(), (*n).clone())).to_string();
 
-		while  i < (*e) 
-		{
-			//println!("Counter i {} out of {}", i, (*e));
-			//println!("Number before mod {}", number);
-			number = (input_num.clone()) * number;
-			i = i + BigUint::parse_bytes("1".as_bytes(),10).unwrap();
-		}
-
-		//println!("Number before mod {}", (number.clone()));
-		//println!("Number After mod {}", (number.clone() % (*n).clone()));
 	}
 
-
-	return ((number.clone() % (*n).clone())).to_string();
+	return ((*n)).to_string();
 }
 
 fn decrypt(decrypt: String, d: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
-	//println!("Test {}", tester);
 
 	let mut input_num = BigUint::parse_bytes(decrypt.as_bytes(),10).unwrap();
 
-	//println!("Now its a number {}", input_num);
-
 	let mut number = input_num.clone();
-
-	//input_num = input_num.parse().unwrap();
 	
 	let mut i = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
 
-	while  i < (*d) 
-	{
-		//println!("Counter i {} out of {}", i, (*e));
-		//println!("Number before mod {}", number);
-		number = (input_num.clone()) * number;
-		i = i + BigUint::parse_bytes("1".as_bytes(),10).unwrap();
-	}
-
-	//println!("Number before mod {}", (number.clone()));
-	//println!("Number After mod {}", (number.clone() % (*totient).clone()));
-
-	number = (number.clone() % (*n).clone());
-
+	number = prime::old_mod_exp(input_num, (*d).clone(), (*n).clone());
 
 	let mut tester = String::new();
 
@@ -202,7 +157,6 @@ fn decrypt(decrypt: String, d: &num::bigint::BigUint, n: &num::bigint::BigUint) 
 		//chew
 		if(temp == 0)
 		{
-			//println!("First Bite Char = {}", c);
 			bite = c.to_string();
 			temp = 1;
 
@@ -210,12 +164,7 @@ fn decrypt(decrypt: String, d: &num::bigint::BigUint, n: &num::bigint::BigUint) 
 			bite = bite + c.to_string().as_slice();
 			temp = 0;
 
-			//println!("Second Bite Char = {}", c);
-			//println!("Bite String = {}", bite);
-
 			tester = tester + val_to_ascii(BigUint::parse_bytes(bite.as_bytes(), 10).unwrap()).to_string().as_slice();
-
-			//println!("Tester = {}", tester);
 		}
 	}
 
@@ -439,7 +388,7 @@ fn val_to_ascii(integer: num::bigint::BigUint) -> char {
 		return 'Z';
 	}
 
-	return ' ';
+	return '[';
 
 }
 
@@ -476,11 +425,6 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
 		newt = temp_one;
 		r = newr;
 		newr = temp_two;
-
-		//if r > BigInt::parse_bytes("1".as_bytes(),10).unwrap() 
-		//{
-		//	return BigInt::parse_bytes("1337".as_bytes(),10).unwrap();
-		//}
 		if t < BigInt::parse_bytes("0".as_bytes(),10).unwrap() 
 		{
 			let mut temp_three = t + (*n).clone();

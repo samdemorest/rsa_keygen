@@ -129,7 +129,7 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
  * modulo cannot be 1 or we will have problems.
  * TODO: Make this not have problems.
  */
-fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+pub fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let b: BitVec = BitVec::from_bytes(&power.to_bytes_le());
     let mut a: BigUint = BigUint::one();
     for i in 0..b.len(){
@@ -145,7 +145,7 @@ fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
  * Gets the result of [base_modulo]^power
  * TODO: This needs to be optimized if this is going to be a practical key generator.
  */
-fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+pub fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let ONE = BigUint::one();
     let mut retval: BigUint = power.clone();
     let mut c: BigUint = ONE.clone(); 
@@ -161,7 +161,7 @@ fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
 /**
  * Raises a BigUint to the power of another BigUint
  */
-fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
+pub fn bigint_exp(base: BigUint, pow: BigUint) -> BigUint{
     let b: BigUint = base.clone();
     let mut retval: BigUint = base.clone();
     let mut counter: BigUint = BigUint::one();
