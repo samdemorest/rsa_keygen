@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.4.14)  21 APR 2015 11:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  21 APR 2015 20:50
 entering extended mode
 **bare_adv.tex
 
-("D:\Programming\GitDumpsHere\rsa_keygen\documentation\Final Document\bare_adv.
-tex"
+("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\ba
+re_adv.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -16,8 +16,8 @@ ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
 
-("D:\Programming\GitDumpsHere\rsa_keygen\documentation\Final Document\IEEEtran.
-cls"
+("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\IE
+EEtran.cls"
 Document Class: IEEEtran 2012/11/21 V1.8c by Harald Hanche-Olsen and Anders Chr
 istensen
 -- Based on V1.7a by Michael Shell
@@ -100,7 +100,7 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <24> not available
 \@IEEEtmpitemindent=\dimen116
 \c@IEEEbiography=\count90
 \@IEEEtranrubishbin=\box26
-) (C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
+) (C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks15
@@ -118,17 +118,16 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \lst@lineno=\count96
 \lst@maxwidth=\dimen120
 
-(C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
+(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
 File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
 \c@lstnumber=\count97
 \lst@skipnumbers=\count98
 \lst@framebox=\box28
 )
-(C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
+(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
 File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
-
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -157,8 +156,8 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen121
 \Gin@req@width=\dimen122
 )
-("D:\Programming\GitDumpsHere\rsa_keygen\documentation\Final Document\bare_adv.
-aux")
+("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\ba
+re_adv.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
@@ -173,7 +172,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
 \c@lstlisting=\count100
 
-(C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count101
 \scratchdimen=\dimen123
@@ -186,14 +185,13 @@ LaTeX Font Info:    ... okay on input line 24.
 \MPnumerator=\count105
 \makeMPintoPDFobject=\count106
 \everyMPtoPDFconversion=\toks18
-) (C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
+) (C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
-) (C:\Users\Desktop\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
+) (C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 49.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
@@ -217,61 +215,58 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <14> not available
 Missing character: There is no Ï in font pplr7t!
 Missing character: There is no † in font pplr7t!
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 73.
+(Font)              <12> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 73.
+(Font)              <8> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 73.
+(Font)              <6> on input line 75.
 Missing character: There is no Ï in font cmr12!
 Missing character: There is no † in font cmr12!
 Missing character: There is no Ï in font pplr7t!
 Missing character: There is no † in font pplr7t!
- [1{C:/Users/Desktop/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+ [1{C:/Users/BuckDich/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 94--95
+Underfull \hbox (badness 1715) in paragraph at lines 88--97
+\OT1/ppl/m/n/12 you would like en-crypted then de-crypted.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--97
 
  []
 
 <Capture.png, id=9, 391.4625pt x 164.86594pt>
 File: Capture.png Graphic file (type png)
  <use Capture.png>
-Package pdftex.def Info: Capture.png used on input line 96.
+Package pdftex.def Info: Capture.png used on input line 98.
 (pdftex.def)             Requested size: 234.8793pt x 98.9203pt.
- [2 <D:/Programming/GitDumpsHere/rsa_keygen/documentation/Final Document/Captur
-e.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 107.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 107.
- [3
-
-]
-("D:\Programming\GitDumpsHere\rsa_keygen\documentation\Final Document\bare_adv.
-aux") ) 
+ [2 <C:/Users/BuckDich/Documents/GitHub/rsa_keygen/documentation/Final Document
+/Capture.png>]
+("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\ba
+re_adv.aux") ) 
 Here is how much of TeX's memory you used:
- 3236 strings out of 493921
- 49377 string characters out of 3144870
- 130477 words of memory out of 3000000
- 6524 multiletter control sequences out of 15000+200000
- 41351 words of font info for 90 fonts, out of 3000000 for 9000
+ 3130 strings out of 493921
+ 48433 string characters out of 3144866
+ 127477 words of memory out of 3000000
+ 6424 multiletter control sequences out of 15000+200000
+ 38452 words of font info for 84 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 31i,5n,49p,871b,971s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progra
-m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fi
-les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
-s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/
-fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
-pe1/urw/palatino/uplri8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw
-/zapfding/uzdr.pfb>
-Output written on bare_adv.pdf (3 pages, 115297 bytes).
+ 31i,5n,49p,871b,259s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.en
+c}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x
+86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files (x86)/MiKT
+eX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
+onts/type1/urw/zapfding/uzdr.pfb>
+Output written on bare_adv.pdf (2 pages, 104022 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
+ 49 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
