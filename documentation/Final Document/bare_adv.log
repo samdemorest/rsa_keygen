@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  20 APR 2015 19:56
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  21 APR 2015 20:50
 entering extended mode
 **bare_adv.tex
 
@@ -128,7 +128,34 @@ File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
 File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen121
+\Gin@req@width=\dimen122
+)
 ("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\ba
 re_adv.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
@@ -143,17 +170,28 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
 LaTeX Font Info:    ... okay on input line 24.
-\c@lstlisting=\count99
+\c@lstlisting=\count100
 
-(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
+(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count101
+\scratchdimen=\dimen123
+\scratchbox=\box29
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen124
+\MPnumerator=\count105
+\makeMPintoPDFobject=\count106
+\everyMPtoPDFconversion=\toks18
+) (C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
-)
-(C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
+) (C:\Users\BuckDich\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstlang1.sty
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 49.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
@@ -177,11 +215,11 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <14> not available
 Missing character: There is no Ï in font pplr7t!
 Missing character: There is no † in font pplr7t!
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 73.
+(Font)              <12> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 73.
+(Font)              <8> on input line 75.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 73.
+(Font)              <6> on input line 75.
 Missing character: There is no Ï in font cmr12!
 Missing character: There is no † in font cmr12!
 Missing character: There is no Ï in font pplr7t!
@@ -190,21 +228,32 @@ Missing character: There is no † in font pplr7t!
 
 
 ]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 106.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 106.
- [2]
+Underfull \hbox (badness 1715) in paragraph at lines 88--97
+\OT1/ppl/m/n/12 you would like en-crypted then de-crypted.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--97
+
+ []
+
+<Capture.png, id=9, 391.4625pt x 164.86594pt>
+File: Capture.png Graphic file (type png)
+ <use Capture.png>
+Package pdftex.def Info: Capture.png used on input line 98.
+(pdftex.def)             Requested size: 234.8793pt x 98.9203pt.
+ [2 <C:/Users/BuckDich/Documents/GitHub/rsa_keygen/documentation/Final Document
+/Capture.png>]
 ("C:\Users\BuckDich\Documents\GitHub\rsa_keygen\documentation\Final Document\ba
 re_adv.aux") ) 
 Here is how much of TeX's memory you used:
- 2363 strings out of 493921
- 37523 string characters out of 3144866
- 112218 words of memory out of 3000000
- 5680 multiletter control sequences out of 15000+200000
- 41351 words of font info for 90 fonts, out of 3000000 for 9000
+ 3130 strings out of 493921
+ 48433 string characters out of 3144866
+ 127477 words of memory out of 3000000
+ 6424 multiletter control sequences out of 15000+200000
+ 38452 words of font info for 84 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 31i,5n,49p,871b,971s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 31i,5n,49p,871b,259s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.en
 c}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
@@ -214,11 +263,10 @@ am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program
 Files (x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files (x86)/MiKT
 eX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/urw/palatino/uplri8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
-pe1/urw/zapfding/uzdr.pfb>
-Output written on bare_adv.pdf (2 pages, 101665 bytes).
+onts/type1/urw/zapfding/uzdr.pfb>
+Output written on bare_adv.pdf (2 pages, 104022 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
+ 49 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
