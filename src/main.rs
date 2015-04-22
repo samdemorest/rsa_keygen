@@ -1,25 +1,33 @@
+#![feature(convert)]
+#![feature(core)]
+#![feature(collections)]
 extern crate num;
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
+extern crate core;
 extern crate rand;
 use num::bigint::BigUint;
 use num::bigint::BigInt;
 use num::bigint;
 use num::bigint::{ToBigUint, RandBigInt};
 use std::fmt;
-use std::old_io as io;
-use std::old_io::File;
+//use std::old_io as io;
+use std::io;
+use std::io::Stdin;
+use std::io::stdin;
+use std::fs::File;
 use rustc_serialize::base64::*;
-use std::num::FromPrimitive;
+//use std::num::FromPrimitive;
 use num::bigint::ToBigInt;
-
+use num::traits::FromPrimitive;
+use num::traits::{One, Zero};
+use num::integer::Integer;
+use core::ops::*;
 mod prime;
 
-use num::bigint::BigInt::*;
 use std::{env};
 
 fn main() {
     
-
     let mut bit_size: usize;
     let args: Vec<_> = env::args().collect();
     if args.len() > 1 {
@@ -33,47 +41,41 @@ fn main() {
 	//let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
 
 
-	let mut p = prime::gen_large_prime(bit_size);
-	let mut q = prime::gen_large_prime(bit_size);
-	
-
-	println!("Value of p = {}", p);
-	println!("Value of q = {}", q);
-
-	let mut n = (&p) * (&q);
-
-	println!("Value of n = {}", n);
-	
-	let mut totient = euler_totient(&p,&q,&n);
-
-	println!("Value of totient = {}", totient);
-
-	let mut e = generate_e((&totient), bit_size);
-
-	println!("Value of e = {}", e);
-
-	//Testing Values
-	//let mut temp_one = BigInt::parse_bytes("17".as_bytes(),10).unwrap();
-	//let mut temp_two = BigInt::parse_bytes("3120".as_bytes(),10).unwrap();
-	//let mut d = inverse(&temp_one, &temp_two);
-
-	let mut d = inverse((&(e.to_bigint().unwrap())), ((&totient.to_bigint().unwrap())));
-
-	println!("Value of d = {}", d);
-
+	let mut p: BigUint = BigUint::zero();
+	let mut q: BigUint = BigUint::zero();
+	let mut d: BigUint = BigUint::zero();
+    let mut n: BigUint= BigUint::zero();
+    let mut totient: BigUint = BigUint::zero();
+    let mut e: BigUint = BigUint::zero();
+    while d.is_zero(){
+        p = prime::gen_large_prime(bit_size);
+        q = prime::gen_large_prime(bit_size);
+        n = (&p) * (&q);
+        totient = euler_totient(&p,&q,&n);
+        e = generate_e((&totient), bit_size);
+        d = inverse((&(e.to_bigint().unwrap())), ((&totient.to_bigint().unwrap())));
+    }
 	let mut reader = io::stdin();
+    let mut stdin_buf: String = "".to_string();
 
+    println!("Value of p = {}", p);
+    println!("Value of q = {}", q);
+    println!("Value of n = {}", n);
+    println!("Value of totient = {}", totient);
+    println!("Value of e = {}", e);
+    println!("Value of d = {}", d);
 	println!("Please Insert Letter To Encrypt");
-	let a = reader.read_line().ok().expect("Failed to Read Line");
+	let a = reader.read_line(&mut stdin_buf).ok().expect("Failed to Read Line");
 
+    let send_str = String::from_str(stdin_buf.clone().trim());
 
-	println!("You sent in {}", a);
+	println!("You sent in {}", stdin_buf);
 
-	let mut encrypted = encrypt(a, (&totient), (&e), (&n));
+	let encrypted = encrypt(send_str, (&e), (&n));
 	println!("Encryption Time = {}", encrypted);
 
 
-	let mut decrypted = decrypt(encrypted.clone(), (&d), (&n));
+	let decrypted = decrypt(encrypted.clone(), (&d), (&n));
 	println!("Decryption Time = {}", decrypted);
 
 }
@@ -83,7 +85,7 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 	//This would get a number from sam's class to get the e value that is random
 	// Testing Statement
 	//let mut e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
-	let mut e = prime::gen_large_prime(bit_size);
+	let e = prime::gen_large_prime(bit_size);
 
 	while e > (*totient)
 	{
@@ -91,10 +93,11 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 		
 		//Testing Value
 		//e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
-		let mut e = prime::gen_large_prime(bit_size);
+		let e = prime::gen_large_prime(bit_size);
 	}
 
-	if(find_gcd(&e,totient) == BigUint::parse_bytes("1".as_bytes(),10).unwrap())
+	//if(find_gcd(&e,totient) == BigUint::parse_bytes("1".as_bytes(),10).unwrap())
+	if e.clone().gcd(&totient.clone()) == BigUint::one()
 	{
 		return e;
 	}
@@ -102,335 +105,88 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 	return generate_e(totient, bit_size);
 }
 
-fn encrypt(encrypt: String, totient: &num::bigint::BigUint, e: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
+fn encrypt(encrypt: String, e: &num::bigint::BigUint, n: &num::bigint::BigUint) -> BigUint {
 
-	let mut tester = String::new();
+	//let mut tester = String::new();
+    let mut tester: Vec<u8> = Vec::new();
 
 
 	for c in encrypt.chars() {
-		//println!("character {}", get_ascii_val(c));
-
-		if(get_ascii_val(c) != -1)
-		{
-			tester = tester + (get_ascii_val(c).to_string().as_slice());
-		}
+        let num: u8 = c as u8;
+        println!("Character: {}", c as u8);
+        tester.push(num);
 	}
 
-	//println!("Test {}", tester);
-
-	let mut input_num = BigUint::parse_bytes(tester.as_bytes(),10).unwrap();
-
-	//println!("Now its a number {}", input_num);
+	let input_num = BigUint::from_bytes_le(tester.as_slice());
 
 	let mut number = input_num.clone();
-
-	//input_num = input_num.parse().unwrap();
 
 	if((*n) > input_num)
 	{
 
 		println!("Number before mod {}", (number.clone()));
-		return (prime::mod_exp(number, (*e).clone(), (*n).clone())).to_string();
+		return (prime::mod_exp(number, (*e).clone(), (*n).clone()));
 
 	}
 
-	return ((*n)).to_string();
+	return ((*n).clone());
 }
 
-fn decrypt(decrypt: String, d: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
-
-	let mut input_num = BigUint::parse_bytes(decrypt.as_bytes(),10).unwrap();
+fn decrypt(decrypt: BigUint, d: &num::bigint::BigUint, n: &num::bigint::BigUint) -> String {
+    println!("Into decrypt: {}", decrypt);
+	let mut input_num = decrypt.clone();
 
 	let mut number = input_num.clone();
 	
-	let mut i = BigUint::parse_bytes("1".as_bytes(),10).unwrap();
+	let mut i = BigUint::one();
 
 	number = prime::old_mod_exp(input_num, (*d).clone(), (*n).clone());
-
+    println!("After mod in decrypt: {}", number);
 	let mut tester = String::new();
 
-	let mut temp = 0;
-	let mut bite = String::new();
-
-	for c in number.to_string().chars() {
-
-		//chew
-		if(temp == 0)
-		{
-			bite = c.to_string();
-			temp = 1;
-
-		} else {
-			bite = bite + c.to_string().as_slice();
-			temp = 0;
-
-			tester = tester + val_to_ascii(BigUint::parse_bytes(bite.as_bytes(), 10).unwrap()).to_string().as_slice();
-		}
-	}
+    let bites = number.clone().to_bytes_le();
+    tester = String::from_utf8(bites).ok().unwrap();
 
 	return tester;
 }
 
-fn get_ascii_val(character: char) -> int {
-	if (character == 'a' || character == 'A')
-	{
-		return 65;
-	}
-	if (character == 'b' || character == 'B')
-	{
-		return 66;	
-	}
-	if (character == 'c' || character == 'C')
-	{
-		return 67;
-	}
-	if (character == 'd' || character == 'D')
-	{
-		return 68;
-	}
-	if (character == 'e' || character == 'E')
-	{
-		return 69;
-	}
-	if (character == 'f' || character == 'F')
-	{
-		return 70;
-	}
-	if (character == 'g' || character == 'G')
-	{
-		return 71;
-	}
-	if (character == 'h' || character == 'H')
-	{
-		return 72;
-	}
-	if (character == 'i' || character == 'I')
-	{
-		return 73;
-	}
-	if (character == 'j' || character == 'J')
-	{
-		return 74;
-	}
-	if (character == 'k' || character == 'K')
-	{
-		return 75;
-	}
-	if (character == 'l' || character == 'L')
-	{
-		return 76;
-	}
-	if (character == 'm' || character == 'M')
-	{
-		return 77;
-	}
-	if (character == 'n' || character == 'N')
-	{
-		return 78;
-	}
-	if (character == 'o' || character == 'O')
-	{
-		return 79;
-	}
-	if (character == 'p' || character == 'P')
-	{
-		return 80;
-	}
-	if (character == 'q' || character == 'Q')
-	{
-		return 81;
-	}
-	if (character == 'r' || character == 'R')
-	{
-		return 82;
-	}
-	if (character == 's' || character == 'S')
-	{
-		return 83;
-	}
-	if (character == 't' || character == 'T')
-	{
-		return 84;
-	}
-	if (character == 'u' || character == 'U')
-	{
-		return 85;
-	}
-	if (character == 'v' || character == 'V')
-	{
-		return 86;
-	}
-	if (character == 'w' || character == 'W')
-	{
-		return 87;
-	}
-	if (character == 'x' || character == 'X')
-	{
-		return 88;
-	}
-	if (character == 'y' || character == 'Y')
-	{
-		return 89;
-	}
-	if (character == 'z' || character == 'Z')
-	{
-		return 90;
-	}
-
-	return -1;
-
-}
-
-fn val_to_ascii(integer: num::bigint::BigUint) -> char {
-	
-	if (integer == BigUint::parse_bytes("65".as_bytes(),10).unwrap())
-	{
-		return 'A';
-	}
-	if (integer == BigUint::parse_bytes("66".as_bytes(),10).unwrap())
-	{
-		return 'B';	
-	}
-	if (integer == BigUint::parse_bytes("67".as_bytes(),10).unwrap())
-	{
-		return 'C';
-	}
-	if (integer == BigUint::parse_bytes("68".as_bytes(),10).unwrap())
-	{
-		return 'D';
-	}
-	if (integer == BigUint::parse_bytes("69".as_bytes(),10).unwrap())
-	{
-		return 'E';
-	}
-	if (integer == BigUint::parse_bytes("70".as_bytes(),10).unwrap())
-	{
-		return 'F';
-	}
-	if (integer == BigUint::parse_bytes("71".as_bytes(),10).unwrap())
-	{
-		return 'G';
-	}
-	if (integer == BigUint::parse_bytes("72".as_bytes(),10).unwrap())
-	{
-		return 'H';
-	}
-	if (integer == BigUint::parse_bytes("73".as_bytes(),10).unwrap())
-	{
-		return 'I';
-	}
-	if (integer == BigUint::parse_bytes("74".as_bytes(),10).unwrap())
-	{
-		return 'J';
-	}
-	if (integer == BigUint::parse_bytes("75".as_bytes(),10).unwrap())
-	{
-		return 'K';
-	}
-	if (integer == BigUint::parse_bytes("76".as_bytes(),10).unwrap())
-	{
-		return 'L';
-	}
-	if (integer == BigUint::parse_bytes("77".as_bytes(),10).unwrap())
-	{
-		return 'M';
-	}
-	if (integer == BigUint::parse_bytes("78".as_bytes(),10).unwrap())
-	{
-		return 'N';
-	}
-	if (integer == BigUint::parse_bytes("79".as_bytes(),10).unwrap())
-	{
-		return 'O';
-	}
-	if (integer == BigUint::parse_bytes("80".as_bytes(),10).unwrap())
-	{
-		return 'P';
-	}
-	if (integer == BigUint::parse_bytes("81".as_bytes(),10).unwrap())
-	{
-		return 'Q';
-	}
-	if (integer == BigUint::parse_bytes("82".as_bytes(),10).unwrap())
-	{
-		return 'R';
-	}
-	if (integer == BigUint::parse_bytes("83".as_bytes(),10).unwrap())
-	{
-		return 'S';
-	}
-	if (integer == BigUint::parse_bytes("84".as_bytes(),10).unwrap())
-	{
-		return 'T';
-	}
-	if (integer == BigUint::parse_bytes("85".as_bytes(),10).unwrap())
-	{
-		return 'U';
-	}
-	if (integer == BigUint::parse_bytes("86".as_bytes(),10).unwrap())
-	{
-		return 'V';
-	}
-	if (integer == BigUint::parse_bytes("87".as_bytes(),10).unwrap())
-	{
-		return 'W';
-	}
-	if (integer == BigUint::parse_bytes("88".as_bytes(),10).unwrap())
-	{
-		return 'X';
-	}
-	if (integer == BigUint::parse_bytes("89".as_bytes(),10).unwrap())
-	{
-		return 'Y';
-	}
-	if (integer == BigUint::parse_bytes("90".as_bytes(),10).unwrap())
-	{
-		return 'Z';
-	}
-
-	return '[';
-
-}
-
-/**
- *  Euclidian method for finding the greatest common denominator
- */
-fn find_gcd(n: &num::bigint::BigUint, m: &num::bigint::BigUint) -> num::bigint::BigUint {
-	
-	if *m == BigUint::parse_bytes("0".as_bytes(),10).unwrap(){
-		return (*n).clone();
-	} else {
-		let a = (*m).clone();
-		let b = (*n).clone() % (*m).clone();
-		return find_gcd(&a, &b)
-	}
+fn get_ascii_val(character: char) -> u8 {
+    return character as u8;
 }
 
 /** 
 * 	used for finding d in the RSA algorithm
 */
 fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::BigUint {
-	let mut t = BigInt::parse_bytes("0".as_bytes(),10).unwrap();
+	let mut t = BigInt::zero();
 	let mut r = (*n).clone();
-	let mut newt = BigInt::parse_bytes("1".as_bytes(),10).unwrap();
+	let mut newt = BigInt::one();
 	let mut newr = (*a).clone();
 
 	while newr != BigInt::parse_bytes("0".as_bytes(), 10).unwrap()
 	{
 		let mut quotient = r.clone() / newr.clone();
 
-		let mut temp_one = t.clone() - (quotient.clone() * newt.clone());
-		let mut temp_two = r.clone() - (quotient.clone() * newr.clone());
+		//let mut temp_one = t.clone() - (quotient.clone() * newt.clone());
+		//let mut temp_two = r.clone() - (quotient.clone() * newr.clone());
+		let mut temp_one = t.sub(&quotient.clone().mul(&newt));
+		let mut temp_two = r.sub(&quotient.clone().mul(&newr));
 		t = newt;
 		newt = temp_one;
 		r = newr;
 		newr = temp_two;
-		if t < BigInt::parse_bytes("0".as_bytes(),10).unwrap() 
+		if t < BigInt::zero()
 		{
 			let mut temp_three = t + (*n).clone();
 			t = temp_three;
-		}	
+        } 
 	}
+    let retval = match t.to_biguint(){
+        Some(val) => val,
+        None => {
+            return BigUint::zero();
+        }
+    };
 	return t.to_biguint().unwrap();
 }
 
@@ -440,6 +196,6 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
  */
 fn euler_totient(p: &num::bigint::BigUint, q: &num::bigint::BigUint, n: &num::bigint::BigUint) -> num::bigint::BigUint {
   let mut euler: num::bigint::BigUint;
- 	euler = n - (p + q - BigUint::parse_bytes("1".as_bytes(),10).unwrap());
+ 	euler = n - (p + q - BigUint::one());
  	return euler;
  }

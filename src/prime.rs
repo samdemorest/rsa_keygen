@@ -2,7 +2,7 @@
 #![feature(convert)]
 #![feature(collections)]
 extern crate num;
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
 extern crate rand;
 extern crate core;
 use num::traits::*;
@@ -16,7 +16,7 @@ use std::error::Error;
 use rustc_serialize::base64::*;
 use rand::Rng;
 use self::core::ops::*;
-use self::core::num::*;
+//use self::core::num::*;
 use std::{env, fmt, usize};
 use num::bigint::BigInt::*;
 
