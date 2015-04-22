@@ -84,7 +84,6 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 	
 	//This would get a number from sam's class to get the e value that is random
 	// Testing Statement
-	//let mut e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
 	let e = prime::gen_large_prime(bit_size);
 
 	while e > (*totient)
@@ -92,11 +91,9 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 		//Get another number from sam until we get one that is smaller than the totient
 		
 		//Testing Value
-		//e = BigUint::parse_bytes("17".as_bytes(),10).unwrap();
 		let e = prime::gen_large_prime(bit_size);
 	}
 
-	//if(find_gcd(&e,totient) == BigUint::parse_bytes("1".as_bytes(),10).unwrap())
 	if e.clone().gcd(&totient.clone()) == BigUint::one()
 	{
 		return e;
@@ -107,7 +104,6 @@ fn generate_e(totient: &num::bigint::BigUint, bit_size: usize) -> num::bigint::B
 
 fn encrypt(encrypt: String, e: &num::bigint::BigUint, n: &num::bigint::BigUint) -> BigUint {
 
-	//let mut tester = String::new();
     let mut tester: Vec<u8> = Vec::new();
 
 
@@ -167,8 +163,6 @@ fn inverse(a: &num::bigint::BigInt, n: &num::bigint::BigInt) -> num::bigint::Big
 	{
 		let mut quotient = r.clone() / newr.clone();
 
-		//let mut temp_one = t.clone() - (quotient.clone() * newt.clone());
-		//let mut temp_two = r.clone() - (quotient.clone() * newr.clone());
 		let mut temp_one = t.sub(&quotient.clone().mul(&newt));
 		let mut temp_two = r.sub(&quotient.clone().mul(&newr));
 		t = newt;
