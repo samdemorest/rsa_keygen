@@ -7,4 +7,4 @@ authors = ["Jason Pearson <jjpearson8611@gmail.com>"]
 [dependencies]
 num = "*"
 rustc-serialize = "*"
-rand = "0.1.4"
+rand = "*"
