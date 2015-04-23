@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  21 APR 2015 19:19
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.24)  22 APR 2015 13:26
 entering extended mode
 **Presentation.tex
 
@@ -1016,15 +1016,11 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 
 ] [3
 
-] <Capture.png, id=107, 391.4625pt x 164.86594pt>
+] <Capture.png, id=107, 261.22594pt x 241.65282pt>
 File: Capture.png Graphic file (type png)
  <use Capture.png>
 Package pdftex.def Info: Capture.png used on input line 43.
-(pdftex.def)             Requested size: 313.17041pt x 131.8929pt.
-
-Overfull \hbox (5.88054pt too wide) in paragraph at lines 43--43
-[][]  
- []
+(pdftex.def)             Requested size: 208.98102pt x 193.32251pt.
 
 [4
 
@@ -1072,7 +1068,7 @@ Here is how much of TeX's memory you used:
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb>
-Output written on Presentation.pdf (7 pages, 88831 bytes).
+Output written on Presentation.pdf (7 pages, 87104 bytes).
 PDF statistics:
  229 PDF objects out of 1000 (max. 8388607)
  15 named destinations out of 1000 (max. 500000)
