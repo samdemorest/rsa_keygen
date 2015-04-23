@@ -1,28 +1,23 @@
-#![feature(core)]
-#![feature(convert)]
-#![feature(collections)]
+//#![feature(core)]
+//#![feature(convert)]
+//#![feature(collections)]
 extern crate num;
 extern crate rustc_serialize;
 extern crate rand;
 extern crate core;
 use num::traits::*;
 use num::integer::Integer;
-use num::bigint::{BigUint, ToBigUint, RandBigInt};
+use num::bigint::{BigUint, RandBigInt};
 use std::io::prelude::*;
 use std::collections::BitVec;
 use std::fs::File;
 use std::path::Path;
 use std::error::Error;
 use rustc_serialize::base64::*;
-use rand::Rng;
 use self::core::ops::*;
 //use self::core::num::*;
-use std::{env, fmt, usize};
-use num::bigint::BigInt::*;
+use std::{env};
 
-/**
- * Global variable definitions
- */
 
 
 /*
@@ -100,12 +95,12 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
         a = rnjesus.gen_biguint_range(&BigUint::from_usize(2).unwrap(), 
                                       &bignum.clone().sub(&TWO));
         //println!("found a: {}", a);
-        x = mod_exp(a.clone(), d.clone(), bignum.clone());
+        x = schneier_mod_exp(a.clone(), d.clone(), bignum.clone());
         //println!("\n\nFinished mod_exp");
         if x.ne(&ONE) && x.ne(&bignum.clone().sub(&ONE)){
             for r in 1..s{
                 //println!("r = {}, s = {}", r, s);
-                x = mod_exp(x, TWO.clone(), bignum.clone());
+                x = schneier_mod_exp(x, TWO.clone(), bignum.clone());
                 if x.eq(&BigUint::one()){
                     //println!("Rejected in for r = 1..s loop");
                     return false
@@ -132,13 +127,52 @@ fn miller_rabin(bignum: BigUint, num_runs: usize) -> bool {
 pub fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let b: BitVec = BitVec::from_bytes(&power.to_bytes_le());
     let mut a: BigUint = BigUint::one();
-    for i in 0..b.len(){
-        a = a.clone().mul(&a).mod_floor(&modulo);
-        if b[i]{
-            a = a.mul(&base).mod_floor(&modulo);
+    //for i in 0..b.len(){
+    for bit in b.iter(){
+        let mut val: usize;
+        if bit{
+            val = 1;
+        } else {
+            val = 0;
+        }
+        print!("{}", val);
+    }
+    println!("");
+    for bit in b.iter(){
+        let newa = match a.clone().checked_mul(&a){
+            Some(val) => val,
+            None => panic!("Overflow!")
+            };
+            a = newa.rem(&modulo);
+        //if b[i]{
+        if bit{
+            a = (a.clone().mul(&base)).rem(&modulo);
         }
     }
+    println!("Returning {}", a.clone());
     return a;
+}
+
+/**
+ * Modulo Exponentiation based on Bruce Schneier's algorithm discussed in his book Applied
+ * Cryptography
+ */
+pub fn schneier_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+    let mut result = BigUint::one();
+    let mut pow = power.clone();
+    let mut basic = base.clone();
+    let ONE = BigUint::one();
+    let TWO = BigUint::from_usize(2).unwrap();
+    let ZERO = BigUint::zero();
+    while pow.gt(&ZERO){
+        if pow.clone().rem(&TWO).eq(&BigUint::one()){
+            result = (result.mul(&basic)).rem(&modulo);
+        }
+        pow = pow.clone().shr(1);
+        basic = basic.clone().mul(&basic).rem(&modulo);
+    }
+    return result;
+ 
 }
 
 /**
@@ -147,11 +181,11 @@ pub fn mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
  */
 pub fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let ONE = BigUint::one();
-    let mut retval: BigUint = power.clone();
+    //let mut retval: BigUint = power.clone();
     let mut c: BigUint = ONE.clone(); 
     let mut i: BigUint = ONE.clone();
     while i.le(&power){
-        c = (base.clone().mul(c)).mod_floor(&modulo);
+        c = (base.clone().mul(c)).rem(&modulo);
         i = i.add(&ONE);
     }
 
@@ -228,11 +262,16 @@ fn write_bnum(bignum: BigUint){
 }
 
 fn check_primality(bignum: BigUint, max_exp: u64) -> bool {
-    let mut q: BigUint;   
-    let mut r: BigUint;   
-    let mut m: BigUint;   
-    let mut isprime: bool;
+    let mut q: BigUint = BigUint::one();   
+    let mut r: BigUint = BigUint::zero();
+    let mut m: BigUint = BigUint::one();   
+    let mut isprime: bool = false; 
 
+    q = m.sub(&r.sub(&q));
+    r = q.clone();
+    m = q.clone();
+    isprime = true;
+    println!("{} {} {} {}", isprime, q, r, m);
     // for k, j <= lg(sizeof(bignum))
     // if k^j == bignum return false
     // Start iterator at 3, since if bignum is even, it won't be prime.
