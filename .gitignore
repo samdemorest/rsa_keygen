@@ -1,7 +1,10 @@
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
-
+target
+timers
+timers*
+timers/*
 # Folder config file
 Desktop.ini
 

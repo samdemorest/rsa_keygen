@@ -4,7 +4,12 @@ name = "rsa_keygen"
 version = "0.0.1"
 authors = ["Jason Pearson <jjpearson8611@gmail.com>"]
 
+[lib]
+name = "prime"
+path = "src/prime.rs"
+
 [dependencies]
 num = "*"
 rustc-serialize = "*"
 rand = "*"
+time = "*"

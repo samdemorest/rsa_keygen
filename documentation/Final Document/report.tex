@@ -1,4 +1,4 @@
-\documentclass[12pt,technote]{IEEEtran}
+\documentclass[11pt,technote]{IEEEtran}
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage[noadjust]{cite}
@@ -181,6 +181,12 @@ until eventually the power reaches zero. This complexity for the algorithm
 should be immediately apparent when studying the code in Figure 3, and studying
 the chart in Figure 2 will provide a clue that this algorithm is likely linear
 in time complexity.
+\par We were able to generate the data used for this analysis using the Rust
+language's built in testing suite. We made extensive use of Rust's testing
+capabilities, following a test-drived development lifecycle, and using tests to
+verify the correctness of the algorithms being implemented. The actual analysis
+of the data was conducted using the R programming language, which is
+particularly well-suited for this type of analysis.
 \section{Goals Reached}
 Our initial goals were to create a primality testing section and to create 
 public and private keys. We were successful in testing for prime numbers with a 
@@ -212,7 +218,6 @@ encrypted then decrypted. Figure 4 exhibits an example run of the program.
 		\caption{Screenshot of the RSA program output}
 	\end{center}
 \end{figure}
-
 
 \section{Conclusion}
 The program does generate large prime numbers as it is advertised to do, however 

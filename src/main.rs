@@ -7,19 +7,14 @@ extern crate core;
 extern crate rand;
 extern crate time;
 extern crate prime;
-use num::bigint::BigUint;
-use num::bigint::BigInt;
-use num::bigint::{ToBigUint};
+use num::bigint::{BigUint, BigInt, ToBigUint, ToBigInt};
 use std::io;
-use std::io::stdin;
-use num::bigint::ToBigInt;
-use num::traits::FromPrimitive;
-use num::traits::{One, Zero};
+use num::traits::{FromPrimitive, One, Zero};
 use num::integer::Integer;
 use core::ops::*;
 use std::error::Error;
+use std::env;
 
-use std::{env};
 
 fn main() {
     println!("{}", time::precise_time_ns());
