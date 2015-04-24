@@ -1,6 +1,6 @@
-//#![feature(core)]
-//#![feature(convert)]
-//#![feature(collections)]
+#![feature(core)]
+#![feature(convert)]
+#![feature(collections)]
 extern crate num;
 extern crate rustc_serialize;
 extern crate rand;
@@ -179,7 +179,7 @@ pub fn schneier_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUi
  * Gets the result of [base_modulo]^power
  * TODO: This needs to be optimized if this is going to be a practical key generator.
  */
-pub fn old_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
+pub fn naive_mod_exp(base: BigUint, power: BigUint, modulo: BigUint) -> BigUint{
     let ONE = BigUint::one();
     //let mut retval: BigUint = power.clone();
     let mut c: BigUint = ONE.clone(); 
@@ -215,14 +215,6 @@ fn get_ds(bignum: BigUint) -> (BigUint, usize){
     //println!("In get_ds");
     let mut test = bignum.clone().sub(&ONE);
     let mut s: usize = 0;
-    /*
-     * TODO: Sometimes this will hit zero when n-1 is even. Gotta figure this one out.
-     */
-    /*while test.is_even(){
-        println!("In loop determining if 'test' is even: {}", test);
-        test = test.div(BigUint::from_usize(2).unwrap());
-        s += 1;
-    }*/
     while test.clone().bitand(&ONE) == ZERO{
         //println!("Test: {}", &test);
         test = test.shr(1);
@@ -266,11 +258,12 @@ fn check_primality(bignum: BigUint, max_exp: u64) -> bool {
     let mut r: BigUint = BigUint::zero();
     let mut m: BigUint = BigUint::one();   
     let mut isprime: bool = false; 
-
+    return false;
     q = m.sub(&r.sub(&q));
     r = q.clone();
     m = q.clone();
     isprime = true;
+    isprime = false;
     println!("{} {} {} {}", isprime, q, r, m);
     // for k, j <= lg(sizeof(bignum))
     // if k^j == bignum return false
@@ -304,15 +297,9 @@ fn check_primality(bignum: BigUint, max_exp: u64) -> bool {
 #[cfg(test)]
 mod tests {
     extern crate num;
-    use super::{bigint_exp, check_primality, is_perfect_power, mod_exp};
+    use super::{bigint_exp, check_primality,  mod_exp};
     use num::bigint::BigUint;
     use num::traits::*;
-
-    #[test]
-    fn test_perfect_power(){
-        assert_eq!(is_perfect_power(BigUint::from_i32(1024).unwrap(),
-                    BigUint::from_i32(2).unwrap(), 10.to_usize().unwrap()), true);
-    }
 
     #[test]
     fn test_prime_check(){
