@@ -27,16 +27,14 @@ fn main() {
     }
     
     //Values used for testing
-	//let mut p = BigUint::parse_bytes("61".as_bytes(),10).unwrap();
-	//let mut q = BigUint::parse_bytes("53".as_bytes(),10).unwrap();
     let five = BigUint::from_usize(5).unwrap();
     let twofiveseven = BigUint::from_usize(257).unwrap();
     let fortyfive = BigUint::from_usize(45).unwrap();
 
     prime::schneier_mod_exp(five, fortyfive, twofiveseven);
-	let mut p: BigUint = BigUint::zero();
-	let mut q: BigUint = BigUint::zero();
-	let mut d: BigUint = BigUint::zero();
+    let mut p: BigUint = BigUint::zero();
+    let mut q: BigUint = BigUint::zero();
+    let mut d: BigUint = BigUint::zero();
     let mut n: BigUint= BigUint::zero();
     let mut totient: BigUint = BigUint::zero();
     let mut e: BigUint = BigUint::zero();
@@ -48,7 +46,7 @@ fn main() {
         e = generate_e((&totient), bit_size);
         d = inverse((&(e.to_bigint().unwrap())), ((&totient.to_bigint().unwrap())));
     }
-	let mut reader = io::stdin();
+    let mut reader = io::stdin();
     let mut stdin_buf: String = "".to_string();
 
     println!("Value of p = {}", p);
@@ -57,49 +55,48 @@ fn main() {
     println!("Value of totient = {}", totient);
     println!("Value of e = {}", e);
     println!("Value of d = {}", d);
-	println!("Please Insert Letter To Encrypt");
-	reader.read_line(&mut stdin_buf).ok().expect("Failed to Read Line");
+    println!("Please Insert Letter To Encrypt");
+    reader.read_line(&mut stdin_buf).ok().expect("Failed to Read Line");
 
     let send_str = String::from_str(stdin_buf.clone().trim());
 
-	println!("You sent in {}", send_str);
+    println!("You sent in {}", send_str);
     
     let e_start_time = time::precise_time_ns();
-	let encrypted = encrypt(send_str, (&e), (&n));
+    let encrypted = encrypt(send_str, (&e), (&n));
     let e_finish_time = time::precise_time_ns();
     let enc_tot_time = e_finish_time - e_start_time;
     println!("Encryption took {} ns", enc_tot_time);
-	//println!("Encryption Time = {}", encrypted);
 
     let d_start_time = time::precise_time_ns();
-	let decrypted = decrypt(encrypted.clone(), (&d), (&n));
+    let decrypted = decrypt(encrypted.clone(), (&d), (&n));
     let d_finish_time = time::precise_time_ns();
     let dec_tot_time = d_finish_time - d_start_time;
     println!("Decryption took {} ns", dec_tot_time);
-	println!("Decryption Time = {}", decrypted);
+    println!("Decryption Time = {}", decrypted);
 
 }
 
 fn generate_e(totient: &BigUint, bit_size: usize) -> BigUint {
-	
-	//This would get a number from sam's class to get the e value that is random
-	// Testing Statement
-	let mut e = prime::gen_large_prime(bit_size);
+    
+    //This would get a number from sam's class to get the e value that is random
+    // Testing Statement
+    let mut e = prime::gen_large_prime(bit_size);
 
-	while e > (*totient)
-	{
-		//Get another number from sam until we get one that is smaller than the totient
-		
-		//Testing Value
-		e = prime::gen_large_prime(bit_size);
-	}
+    while e > (*totient)
+    {
+        //Get another number from sam until we get one that is smaller than the totient
+        
+        //Testing Value
+        e = prime::gen_large_prime(bit_size);
+    }
 
-	if e.clone().gcd(&totient.clone()) == BigUint::one()
-	{
-		return e;
-	}
-	
-	return generate_e(totient, bit_size);
+    if e.clone().gcd(&totient.clone()) == BigUint::one()
+    {
+        return e;
+    }
+    
+    return generate_e(totient, bit_size);
 }
 
 fn encrypt(encrypt: String, e: &BigUint, n: &BigUint) -> BigUint {
@@ -107,30 +104,30 @@ fn encrypt(encrypt: String, e: &BigUint, n: &BigUint) -> BigUint {
     let mut tester: Vec<u8> = Vec::new();
 
 
-	for c in encrypt.chars() {
+    for c in encrypt.chars() {
         let num: u8 = c as u8; // was u8
         tester.push(num);
-	}
+    }
 
-	let input_num = BigUint::from_bytes_le(tester.as_slice());
+    let input_num = BigUint::from_bytes_le(tester.as_slice());
 
-	let number = input_num.clone();
+    let number = input_num.clone();
 
-	if (*n) > input_num
-	{
+    if (*n) > input_num
+    {
 
-		return prime::schneier_mod_exp(number, (*e).clone(), (*n).clone());
+        return prime::schneier_mod_exp(number, (*e).clone(), (*n).clone());
 
-	}
+    }
 
-	return (*n).clone();
+    return (*n).clone();
 }
 
 fn decrypt(decrypt: BigUint, d: &BigUint, n: &BigUint) -> String {
-	let input_num = decrypt.clone();
+    let input_num = decrypt.clone();
 
-	
-	let number = prime::schneier_mod_exp(input_num.clone(), (*d).clone(), (*n).clone());
+    
+    let number = prime::schneier_mod_exp(input_num.clone(), (*d).clone(), (*n).clone());
 
     let bites: Vec<u8> = number.clone().to_bytes_le();
 
@@ -140,34 +137,34 @@ fn decrypt(decrypt: BigUint, d: &BigUint, n: &BigUint) -> String {
         Ok(bits) => bits
     };
 
-	return tester;
+    return tester;
 }
 
 /** 
-* 	used for finding d in the RSA algorithm
+*   used for finding d in the RSA algorithm
 */
 fn inverse(a: &BigInt, n: &BigInt) -> BigUint {
-	let mut t = BigInt::zero();
-	let mut r = (*n).clone();
-	let mut newt = BigInt::one();
-	let mut newr = (*a).clone();
+    let mut t = BigInt::zero();
+    let mut r = (*n).clone();
+    let mut newt = BigInt::one();
+    let mut newr = (*a).clone();
 
-	while newr != BigInt::parse_bytes("0".as_bytes(), 10).unwrap()
-	{
-		let quotient = r.clone() / newr.clone();
+    while newr != BigInt::parse_bytes("0".as_bytes(), 10).unwrap()
+    {
+        let quotient = r.clone() / newr.clone();
 
-		let temp_one = t.sub(&quotient.clone().mul(&newt));
-		let temp_two = r.sub(&quotient.clone().mul(&newr));
-		t = newt;
-		newt = temp_one;
-		r = newr;
-		newr = temp_two;
-		if t < BigInt::zero()
-		{
-			let temp_three = t + (*n).clone();
-			t = temp_three;
+        let temp_one = t.sub(&quotient.clone().mul(&newt));
+        let temp_two = r.sub(&quotient.clone().mul(&newr));
+        t = newt;
+        newt = temp_one;
+        r = newr;
+        newr = temp_two;
+        if t < BigInt::zero()
+        {
+            let temp_three = t + (*n).clone();
+            t = temp_three;
         } 
-	}
+    }
     match t.to_biguint(){
         Some(val) => {
             return val
@@ -184,8 +181,8 @@ fn inverse(a: &BigInt, n: &BigInt) -> BigUint {
  */
 fn euler_totient(p: &BigUint, q: &BigUint, n: &BigUint) -> BigUint {
   let mut euler: BigUint;
- 	euler = n - (p + q - BigUint::one());
- 	return euler;
+    euler = n - (p + q - BigUint::one());
+    return euler;
  }
 
 #[cfg(test)]
